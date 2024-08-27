@@ -144,7 +144,7 @@ body {
     padding: 0 1rem;
   }
   .hero {
-    background-image: url('C:\Users\mso2s\Documents\GitHub\NovaCinemaFrontend\novacinema\src\assets\film-strip-perspective-3d-isometric-600nw-2144961605.jpg');
+    background-image: url('@/assets/film-strip-perspective-3d-isometric-600nw-2144961605.jpg');
     background-size: cover;
     background-position: center;
     height: 400px;
