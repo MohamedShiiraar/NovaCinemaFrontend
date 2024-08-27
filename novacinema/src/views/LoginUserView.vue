@@ -2,7 +2,7 @@
   <div class="login">
     <nav>
     <ul>
-      <li><a href="/" class="active">Home</a></li>
+      <li><a href="/" >Home</a></li>
       <li><a href="/movies">Movies</a></li>
       <li><a href="/cinema">Cinema</a></li>
       <li class="dropdown">

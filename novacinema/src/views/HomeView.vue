@@ -6,7 +6,7 @@
       <li><a href="/movies">Movies</a></li>
       <li><a href="/cinema">Cinema</a></li>
       <li class="dropdown">
-      <a href="/myaccount" class="dropbtn">My Account</a>
+      <a href="/account" class="dropbtn">My Account</a>
       <div class="dropdown-content">
         <a href="/login">Login</a>
         <a href="/register">Register</a>
@@ -58,6 +58,20 @@
           <img src="https://via.placeholder.com/200x300?text=Movie+5" alt="Movie 5 Poster">
           <div class="movie-info">
             <h3>Movie Title 5</h3>
+            <p>Genre: Horror</p>
+          </div>
+        </div>
+        <div class="movie-card">
+          <img src="https://via.placeholder.com/200x300?text=Movie+6" alt="Movie 6 Poster">
+          <div class="movie-info">
+            <h3>Movie Title 6</h3>
+            <p>Genre: Horror</p>
+          </div>
+        </div>
+        <div class="movie-card">
+          <img src="https://via.placeholder.com/200x300?text=Movie+7" alt="Movie 7 Poster">
+          <div class="movie-info">
+            <h3>Movie Title 7</h3>
             <p>Genre: Horror</p>
           </div>
         </div>
