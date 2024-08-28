@@ -4,6 +4,8 @@ import ListMovies from '@/views/ListMovies.vue'
 import RegisterUserView from '@/views/RegisterUserView.vue'
 import LoginUserView from '@/views/LoginUserView.vue'
 import MyAccountView from '@/views/MyAccountView.vue'
+import BookingTicketView from '@/views/BookingTicketView.vue'
+import ConfirmationView from '@/views/ConfirmationView.vue'
 
 const routes = [
   {
@@ -31,7 +33,19 @@ const routes = [
     path: '/myaccount',
     name: 'MyAccount',
     component: MyAccountView
-  }
+  },
+
+  {
+    path: '/',
+    name: 'Booking',
+    component: BookingTicketView
+  },
+
+  {
+    path: '/confirmation',
+    name: 'Confirmation',
+    component: ConfirmationView
+  },
 
 ]
 
