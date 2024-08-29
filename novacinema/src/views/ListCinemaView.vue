@@ -5,6 +5,7 @@
         <li><router-link to="/">Home</router-link></li>
         <li><router-link to="/movies">Movies</router-link></li>
         <li><router-link to="/cinema" class="active">Cinema</router-link></li>
+        <li><a href="/promotions">Promotions</a></li>
         <li class="dropdown">
           <router-link to="/myaccount" class="dropbtn">My Account</router-link>
           <div class="dropdown-content">
