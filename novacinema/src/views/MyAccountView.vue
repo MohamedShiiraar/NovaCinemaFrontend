@@ -25,25 +25,17 @@
         </ul>
     </aside>
     <section class="content">
-        <!-- Profile Information -->
         <div v-if="currentSection === 'profile'">
           <h2 class="h5">Profile Information</h2>
           <form class="profile-info" @submit.prevent="saveProfile">
-            <!-- Profile fields remain the same -->
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" value="Name">
+        <label for="surname">Surname:</label>
+        <input type="tel" id="surname" name="surname" value="Surname">
+
+        <label for="emailAddress">Email:</label>
+        <input type="emailAddress" id="emailAddress" name="emailAddress" value="Email">
         
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" value="Email">
-        
-        <label for="phone">Phone:</label>
-        <input type="tel" id="phone" name="phone" value="Phone">
-        
-        <label for="dob">Date of Birth:</label>
-        <input type="date" id="dob" name="dob" value="Date Of Birth">
-        
-        <label for="address">Address:</label>
-        <input type="text" id="address" name="address" value="Address">
         
         <label for="language">Preferred Language:</label>
         <select id="language" name="language">
@@ -58,7 +50,7 @@
           </form>
         </div>
 
-        <!-- Payment Methods -->
+        Payment Methods
         <div v-if="currentSection === 'payment'">
           <h2 class="h5">Payment Methods</h2>
           <ul class="cards-list">
@@ -81,7 +73,7 @@
           </form>
         </div>
 
-        <!-- My Bookings -->
+        My Bookings
         <div v-if="currentSection === 'bookings'">
           <h2 class="h5">My Bookings</h2>
           <p>Booking details would go here.</p>
@@ -95,7 +87,7 @@
 export default {
   data() {
     return {
-      currentSection: 'profile', // Default to showing profile
+      currentSection: 'profile',
       savedCards: [
         { id: 1, brand: 'Visa', last4: '1234' },
         { id: 2, brand: 'MasterCard', last4: '5678' },
@@ -104,6 +96,14 @@ export default {
         number: '',
         expiry: '',
         cvc: ''
+      },
+      loggedInUser: {
+        name: '',
+        email: '',
+        phone: '',
+        dob: '',
+        address: '',
+        language: 'en'
       }
     };
   },
@@ -112,28 +112,41 @@ export default {
       this.currentSection = section;
     },
     saveProfile() {
-      // Handle profile save logic here
       alert('Profile saved!');
     },
     addCard() {
-      // Logic to add a new card to savedCards
       const last4 = this.newCard.number.slice(-4);
       this.savedCards.push({ 
         id: Date.now(), 
         brand: this.getCardBrand(this.newCard.number), 
         last4 
       });
-      this.newCard = { number: '', expiry: '', cvc: '' }; // Reset form
+      this.newCard = { number: '', expiry: '', cvc: '' };
     },
     removeCard(id) {
       this.savedCards = this.savedCards.filter(card => card.id !== id);
     },
     getCardBrand(number) {
-      // A simple function to determine the card brand
       if (number.startsWith('4')) return 'Visa';
       if (number.startsWith('5')) return 'MasterCard';
       return 'Unknown';
+    },
+    loadProfile() {
+      const user = JSON.parse(localStorage.getItem('loggedInUser'));
+      if (user) {
+        this.loggedInUser = { 
+          name: user.name,
+          surname: user.surname || '',
+          emailAddress: user.emailAddress,
+          dob: user.dob || '',
+          address: user.address || '',
+          language: user.language || 'en'
+        };
+      }
     }
+  },
+  created() {
+    this.loadProfile(); 
   }
 }
 </script>

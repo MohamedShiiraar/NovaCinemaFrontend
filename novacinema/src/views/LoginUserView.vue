@@ -33,8 +33,10 @@
 </template>
 
 <script>
+import UserService from '@/Services/UserService';
+
 export default {
-    name: 'UserLogin',
+  name: 'UserLogin',
   data() {
     return {
       email: '',
@@ -42,11 +44,23 @@ export default {
     };
   },
   methods: {
-    handleLogin() {
-      console.log('Logging in with', this.email, this.password);
+    async handleLogin() {
+      try {
+        const response = await UserService.getAllUsers();
+        const user = response.data.find(u => u.emailAddress === this.email && u.password === this.password);
+        if (user) {
+          alert('Login successful!');
+          localStorage.setItem('loggedInUser', JSON.stringify(user));
+          this.$router.push('/myaccount');
+        } else {
+          alert('Invalid email or password');
+        }
+      } catch (error) {
+        console.error('Login error:', error);
+        alert('An error occurred during login');
+      }
     }
   }
-
 }
 </script>
 

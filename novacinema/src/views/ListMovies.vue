@@ -1,160 +1,109 @@
 <template>
-    <div class = 'movies'>
-        <nav>
-    <ul>
-      <li><a href="/">Home</a></li>
-      <li><a href="/" class="active">Movies</a></li>
-      <li><a href="/cinema">Cinema</a></li>
-      <li><a href="/promotions">Promotions</a></li>
-      <li class="dropdown">
-      <a href="/myaccount" class="dropbtn">My Account</a>
-      <div class="dropdown-content">
-        <a href="/login">Login</a>
-        <a href="/register">Register</a>
-      </div>
-    </li>
-    </ul>
-  </nav> 
-  <main>
-    <h2>Now Showing</h2>
-    <div class="filters">
-      <div class="filter-group">
-        <select id="genre-filter">
-          <option value="">All Genres</option>
-          <option value="action">Action</option>
-          <option value="comedy">Comedy</option>
-          <option value="drama">Drama</option>
-          <option value="scifi">Sci-Fi</option>
-          <option value="horror">Horror</option>
-        </select>
-        <select id="rating-filter">
-          <option value="">All Ratings</option>
-          <option value="g">G</option>
-          <option value="pg">PG</option>
-          <option value="pg13">PG-13</option>
-          <option value="r">R</option>
-        </select>
-      </div>
-      <input type="text" id="search" placeholder="Search movies...">
-    </div>
-    <div class="movie-grid">
-      <div class="movie-card">
-        <img src="https://via.placeholder.com/200x300?text=Movie+1" alt="Movie 1 Poster">
-        <div class="movie-info">
-          <h3>Galactic Odyssey</h3>
-          <p>Genre: Sci-Fi</p>
-          <p>Rating: PG-13</p>
-          <div class="rating">
-            <span class="star">★★★★</span>
-            <span>4.0</span>
+  <div class="movies">
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/" class="active">Movies</a></li>
+        <li><a href="/cinema">Cinema</a></li>
+        <li><a href="/promotions">Promotions</a></li>
+        <li class="dropdown">
+          <a href="/myaccount" class="dropbtn">My Account</a>
+          <div class="dropdown-content">
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
           </div>
+        </li>
+      </ul>
+    </nav>
+    <main>
+      <h2>Now Showing</h2>
+      <div class="filters">
+        <div class="filter-group">
+          <select v-model="selectedGenre" @change="filterMovies">
+            <option value="">All Genres</option>
+            <option value="Action">Action</option>
+            <option value="Comedy">Comedy</option>
+            <option value="Drama">Drama</option>
+            <option value="Sci-Fi">Sci-Fi</option>
+            <option value="Horror">Horror</option>
+          </select>
+          <select v-model="selectedRating" @change="filterMovies">
+            <option value="">All Ratings</option>
+            <option value="G">G</option>
+            <option value="PG">PG</option>
+            <option value="PG-13">PG-13</option>
+            <option value="R">R</option>
+          </select>
         </div>
-        <a href="/booking" class="book-button">Book Now</a>
+        <input type="text" v-model="searchTerm" placeholder="Search movies..." @input="filterMovies">
       </div>
-      <div class="movie-card">
-        <img src="https://via.placeholder.com/200x300?text=Movie+2" alt="Movie 2 Poster">
-        <div class="movie-info">
-          <h3>Laughter Lane</h3>
-          <p>Genre: Comedy</p>
-          <p>Rating: PG</p>
-          <div class="rating">
-            <span class="star">★★★★★</span>
-            <span>4.5</span>
+      <div class="movie-grid">
+        <div v-for="movie in filteredMovies" :key="movie.id" class="movie-card">
+          <img :src="movie.posterUrl || 'https://via.placeholder.com/200x300?text=No+Image'" :alt="movie.title + ' Poster'">
+          <div class="movie-info">
+            <h3>{{ movie.name }}</h3>
+            <p>Genre: {{ movie.genre }}</p>
+            <p>Rating: {{ movie.duration }}</p>
+            <div class="rating">
+              <span class="star">★★★★</span>
+              <span>{{ movie.ratingScore }}</span>
+            </div>
           </div>
+          <a href="/booking" class="book-button">Book Now</a>
         </div>
-        <a href="/booking" class="book-button">Book Now</a>
       </div>
-      
-      <div class="movie-card">
-        <img src="https://via.placeholder.com/200x300?text=Movie+4" alt="Movie 4 Poster">
-        <div class="movie-info">
-          <h3>Heartstrings</h3>
-          <p>Genre: Drama</p>
-          <p>Rating: PG-13</p>
-          <div class="rating">
-            <span class="star">★★★★★</span>
-            <span>4.8</span>
-          </div>
-        </div>
-        <a href="/booking" class="book-button">Book Now</a>
+      <div class="pagination">
+        <button disabled>Previous</button>
+        <button>1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>Next</button>
       </div>
-      <div class="movie-card">
-        <img src="https://via.placeholder.com/200x300?text=Movie+5" alt="Movie 5 Poster">
-        <div class="movie-info">
-          <h3>Adrenaline Rush</h3>
-          <p>Genre: Action</p>
-          <p>Rating: PG-13</p>
-          <div class="rating">
-            <span class="star">★★★★</span>
-            <span>4.3</span>
-          </div>
-        </div>
-        <a href="/booking" class="book-button">Book Now</a>
-      </div>
-      <div class="movie-card">
-        <img src="https://via.placeholder.com/200x300?text=Movie+6" alt="Movie 6 Poster">
-        <div class="movie-info">
-          <h3>Timeless Love</h3>
-          <p>Genre: Romance</p>
-          <p>Rating: PG</p>
-          <div class="rating">
-            <span class="star">★★★★</span>
-            <span>4.1</span>
-          </div>
-        </div>
-        <a href="/booking" class="book-button">Book Now</a>
-      </div>
-    </div>
-    <div class="pagination">
-      <button disabled>Previous</button>
-      <button>1</button>
-      <button>2</button>
-      <button>3</button>
-      <button>Next</button>
-    </div>
-  </main>
-    </div>
-    
-    
-  
+    </main>
+  </div>
 </template>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-      const genreFilter = document.getElementById('genre-filter');
-      const ratingFilter = document.getElementById('rating-filter');
-      const searchInput = document.getElementById('search');
-      const movieCards = document.querySelectorAll('.movie-card');
+import MovieService from "@/Services/MovieService";
 
-      function filterMovies() {
-        const selectedGenre = genreFilter.value.toLowerCase();
-        const selectedRating = ratingFilter.value.toLowerCase();
-        const searchTerm = searchInput.value.toLowerCase();
-
-        movieCards.forEach(card => {
-          const genre = card.querySelector('.movie-info p:nth-child(2)').textContent.toLowerCase();
-          const rating = card.querySelector('.movie-info p:nth-child(3)').textContent.toLowerCase();
-          const title = card.querySelector('.movie-info h3').textContent.toLowerCase();
-
-          const genreMatch = selectedGenre === '' || genre.includes(selectedGenre);
-          const ratingMatch = selectedRating === '' || rating.includes(selectedRating);
-          const searchMatch = title.includes(searchTerm);
-
-          if (genreMatch && ratingMatch && searchMatch) {
-            card.style.display = 'block';
-          } else {
-            card.style.display = 'none';
-          }
-        });
-      }
-
-      genreFilter.addEventListener('change', filterMovies);
-      ratingFilter.addEventListener('change', filterMovies);
-      searchInput.addEventListener('input', filterMovies);
+export default {
+  data() {
+    return {
+      movies: [],
+      selectedGenre: '',
+      selectedRating: '',
+      searchTerm: '',
+    };
+  },
+  computed: {
+    filteredMovies() {
+    const filtered = this.movies.filter(movie => {
+      return (movie.title || '').toLowerCase().includes((this.searchTerm || '').toLowerCase());
     });
-
-
-
+    console.log('Filtered movies:', filtered); // Debug log
+    return filtered;
+  }
+    
+  },
+  methods: {
+    fetchMovies() {
+    MovieService.getAllMovies()
+      .then(response => {
+        this.movies = response.data;
+        console.log('Movies fetched:', this.movies); // Debug log
+      })
+      .catch(error => {
+        console.error("Error fetching movies:", error);
+      });
+  },
+    filterMovies() {
+      
+    }
+  },
+  created() {
+    this.fetchMovies();
+  }
+};
 </script>
 
 <style scoped>

@@ -45,27 +45,48 @@
 </template>
 
 <script>
+import UserService from '@/Services/UserService'; // Import the UserService
+
 export default {
-    name: 'RegisterUser',
+  name: 'RegisterUser',
   data() {
     return {
       name: '',
-      surname:'',
+      surname: '',
       email: '',
       password: '',
       confirmPassword: ''
     };
   },
   methods: {
-    handleRegister() {
-      if (this.password !== this.confirmPassword) {
-        alert('Passwords do not match');
-        return;
+    async handleRegister() {
+    if (this.password !== this.confirmPassword) {
+      alert('Passwords do not match');
+      return;
+    }
+    try {
+      const user = {
+        name: this.name,
+        surname: this.surname,
+        emailAddress: this.email,
+        password: this.password
+      };
+      console.log(user);
+      
+      const response = await UserService.createUser(user);
+
+      if (response.status === 201) { 
+        alert('Registration successful!');
+        this.$router.push('/login'); // Redirect to login page
+      } else {
+        alert(`Registration failed: ${response.data.message || 'Unknown error'}`);
       }
-      console.log('Registering with', this.name, this.email, this.password);
+    } catch (error) {
+      console.error('Registration error:', error);
+      alert(`An error occurred during registration: ${error.response?.data?.message || 'Unknown error'}`);
     }
   }
-
+}
 }
 </script>
 
