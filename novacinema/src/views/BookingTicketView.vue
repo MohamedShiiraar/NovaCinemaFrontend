@@ -171,6 +171,28 @@ export default {
 </script>
 
 <style scoped>
+nav {
+    background-color: #333;
+    padding: 0.5rem;
+  }
+  nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+  }
+  nav ul li {
+    margin: 0 1rem;
+  }
+  nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  nav ul li a.active {
+    color: #e50914;
+  }
 body {
   font-family: 'Roboto', sans-serif;
   margin: 0;
