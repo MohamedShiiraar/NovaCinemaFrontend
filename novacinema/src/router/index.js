@@ -6,6 +6,7 @@ import LoginUserView from '@/views/LoginUserView.vue'
 import MyAccountView from '@/views/MyAccountView.vue'
 import BookingTicketView from '@/views/BookingTicketView.vue'
 import ConfirmationView from '@/views/ConfirmationView.vue'
+import PromotionInformation from '@/views/PromotionInformation.vue'
 
 const routes = [
   {
@@ -46,6 +47,11 @@ const routes = [
     name: 'Confirmation',
     component: ConfirmationView
   },
+  {
+    path: '/promotions',
+    name: 'Promotions',
+    component: PromotionInformation
+  }
 
 ]
 
