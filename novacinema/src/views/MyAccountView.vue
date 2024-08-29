@@ -19,14 +19,17 @@
   <main class="main2">
     <aside class="sidebar">
       <ul>
-        <li><a href="/account#profile" class="active">Profile</a></li>
-        <li><a href="/account#payment">Payment Methods</a></li>
-        <li><a href="/account#bookings">My Bookings</a></li>
-      </ul>
+          <li><a href="#" @click="showSection('profile')" :class="{ active: currentSection === 'profile' }">Profile</a></li>
+          <li><a href="#" @click="showSection('payment')" :class="{ active: currentSection === 'payment' }">Payment Methods</a></li>
+          <li><a href="#" @click="showSection('bookings')" :class="{ active: currentSection === 'bookings' }">My Bookings</a></li>
+        </ul>
     </aside>
     <section class="content">
-      <h2 class ="h5">Profile Information</h2>
-      <form class="profile-info">
+        <!-- Profile Information -->
+        <div v-if="currentSection === 'profile'">
+          <h2 class="h5">Profile Information</h2>
+          <form class="profile-info" @submit.prevent="saveProfile">
+            <!-- Profile fields remain the same -->
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" value="Name">
         
@@ -51,20 +54,91 @@
         </select>
         
         <div></div>
-        <button type="submit" class="save-button">Save Changes</button>
-      </form>
-    </section>
+            <button type="submit" class="save-button">Save Changes</button>
+          </form>
+        </div>
+
+        <!-- Payment Methods -->
+        <div v-if="currentSection === 'payment'">
+          <h2 class="h5">Payment Methods</h2>
+          <ul class="cards-list">
+            <li v-for="card in savedCards" :key="card.id" class="card-item">
+              <span>{{ card.brand }} ending in {{ card.last4 }}</span>
+              <button @click="removeCard(card.id)">Remove</button>
+            </li>
+          </ul>
+          <form class="add-card-form" @submit.prevent="addCard">
+            <label for="card-number">Card Number:</label>
+            <input type="text" id="card-number" v-model="newCard.number" placeholder="Card Number" required>
+
+            <label for="expiry-date">Expiry Date:</label>
+            <input type="text" id="expiry-date" v-model="newCard.expiry" placeholder="MM/YY" required>
+
+            <label for="cvc">CVC:</label>
+            <input type="text" id="cvc" v-model="newCard.cvc" placeholder="CVC" required>
+
+            <button type="submit" class="save-button">Add Card</button>
+          </form>
+        </div>
+
+        <!-- My Bookings -->
+        <div v-if="currentSection === 'bookings'">
+          <h2 class="h5">My Bookings</h2>
+          <p>Booking details would go here.</p>
+        </div>
+      </section>
   </main>
   </div>
 </template>
 
 <script>
 export default {
-
+  data() {
+    return {
+      currentSection: 'profile', // Default to showing profile
+      savedCards: [
+        { id: 1, brand: 'Visa', last4: '1234' },
+        { id: 2, brand: 'MasterCard', last4: '5678' },
+      ],
+      newCard: {
+        number: '',
+        expiry: '',
+        cvc: ''
+      }
+    };
+  },
+  methods: {
+    showSection(section) {
+      this.currentSection = section;
+    },
+    saveProfile() {
+      // Handle profile save logic here
+      alert('Profile saved!');
+    },
+    addCard() {
+      // Logic to add a new card to savedCards
+      const last4 = this.newCard.number.slice(-4);
+      this.savedCards.push({ 
+        id: Date.now(), 
+        brand: this.getCardBrand(this.newCard.number), 
+        last4 
+      });
+      this.newCard = { number: '', expiry: '', cvc: '' }; // Reset form
+    },
+    removeCard(id) {
+      this.savedCards = this.savedCards.filter(card => card.id !== id);
+    },
+    getCardBrand(number) {
+      // A simple function to determine the card brand
+      if (number.startsWith('4')) return 'Visa';
+      if (number.startsWith('5')) return 'MasterCard';
+      return 'Unknown';
+    }
+  }
 }
 </script>
 
-<style>
+<style scoped>
 nav {
     background-color: #333;
     padding: 0.5rem;
