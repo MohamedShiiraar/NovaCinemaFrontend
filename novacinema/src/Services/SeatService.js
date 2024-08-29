@@ -1,27 +1,27 @@
 import axios from 'axios';
 
-const ROOM_API_BASE_URL = "http://localhost:8080/room";
+const SEAT_API_BASE_URL = "http://localhost:8080/seat";
 
-class RoomService {
-  // Fetch all rooms
-  getAllRooms() {
-    return axios.get(`${ROOM_API_BASE_URL}/getAll`);
+class SeatService {
+  // Fetch all seats
+  getAllSeats() {
+    return axios.get(`${SEAT_API_BASE_URL}/getAll`);
   }
 
-  // Fetch a single room by ID
-  getRoomById(roomID) {
-    return axios.get(`${ROOM_API_BASE_URL}/read${roomID}`);
+  // Fetch a single seat by ID
+  getSeatById(seatID) {
+    return axios.get(`${SEAT_API_BASE_URL}/read${seatID}`);
   }
 
-  // Create a new room
-  createRoom(room) {
-    return axios.post(`${ROOM_API_BASE_URL}/create`, room);
+  // Create a new seat
+  createSeat(seat) {
+    return axios.post(`${SEAT_API_BASE_URL}/create`, seat);
   }
 
-  // Update a room
-  updateRoom(room) {
-    return axios.post(`${ROOM_API_BASE_URL}/update`, room);
+  // Update a seat
+  updateSeat(seat) {
+    return axios.post(`${SEAT_API_BASE_URL}/update`, seat);
   }
 }
 
-export default new RoomService();
+export default new SeatService();
