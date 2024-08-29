@@ -6,6 +6,7 @@ import LoginUserView from '@/views/LoginUserView.vue'
 import MyAccountView from '@/views/MyAccountView.vue'
 import BookingTicketView from '@/views/BookingTicketView.vue'
 import ConfirmationView from '@/views/ConfirmationView.vue'
+import PromotionInformation from '@/views/PromotionInformation.vue'
 import ListCinemaView from '@/views/ListCinemaView.vue'
 
 
@@ -54,6 +55,11 @@ const routes = [
     component: ListCinemaView
   },
   
+  {
+    path: '/promotions',
+    name: 'Promotions',
+    component: PromotionInformation
+  },
 
 ]
 

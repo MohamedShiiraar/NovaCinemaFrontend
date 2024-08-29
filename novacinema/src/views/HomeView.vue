@@ -5,6 +5,7 @@
       <li><a href="/" class="active">Home</a></li>
       <li><a href="/movies">Movies</a></li>
       <li><a href="/cinema">Cinema</a></li>
+      <li><a href="/promotions">Promotions</a></li>
       <li class="dropdown">
       <a href="/myaccount" class="dropbtn">My Account</a>
       <div class="dropdown-content">
@@ -86,7 +87,7 @@
           <div class="promo-info">
             <h3>Student Discount</h3>
             <p>Get 20% off on all movie tickets with your student ID</p>
-            <a href="/promotions/student" class="promo-button">Learn More</a>
+            <router-link :to="{ name: 'Promotions', query: { section: 'student' } }" class="promo-button">Learn More</router-link>
           </div>
         </div>
         <div class="promo-card">
@@ -94,7 +95,7 @@
           <div class="promo-info">
             <h3>Family Package</h3>
             <p>Save big with our family package for groups of 4 or more</p>
-            <a href="/promotions/family" class="promo-button">Learn More</a>
+            <router-link :to="{ name: 'Promotions', query: { section: 'family' } }" class="promo-button">Learn More</router-link>
           </div>
         </div>
         <div class="promo-card">
@@ -102,7 +103,7 @@
           <div class="promo-info">
             <h3>Senior Citizen Offer</h3>
             <p>Enjoy special discounts for our senior moviegoers</p>
-            <a href="/promotions/senior" class="promo-button">Learn More</a>
+            <router-link :to="{ name: 'Promotions', query: { section: 'senior' } }" class="promo-button">Learn More</router-link>
           </div>
         </div>
       </div>
