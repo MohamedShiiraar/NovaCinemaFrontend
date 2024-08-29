@@ -48,7 +48,7 @@
             <span>4.0</span>
           </div>
         </div>
-        <a href="/movies/galactic-odyssey" class="book-button">Book Now</a>
+        <a href="/booking" class="book-button">Book Now</a>
       </div>
       <div class="movie-card">
         <img src="https://via.placeholder.com/200x300?text=Movie+2" alt="Movie 2 Poster">
@@ -61,7 +61,7 @@
             <span>4.5</span>
           </div>
         </div>
-        <a href="/movies/laughter-lane" class="book-button">Book Now</a>
+        <a href="/booking" class="book-button">Book Now</a>
       </div>
       
       <div class="movie-card">
@@ -75,7 +75,7 @@
             <span>4.8</span>
           </div>
         </div>
-        <a href="/movies/heartstrings" class="book-button">Book Now</a>
+        <a href="/booking" class="book-button">Book Now</a>
       </div>
       <div class="movie-card">
         <img src="https://via.placeholder.com/200x300?text=Movie+5" alt="Movie 5 Poster">
@@ -88,7 +88,7 @@
             <span>4.3</span>
           </div>
         </div>
-        <a href="/movies/adrenaline-rush" class="book-button">Book Now</a>
+        <a href="/booking" class="book-button">Book Now</a>
       </div>
       <div class="movie-card">
         <img src="https://via.placeholder.com/200x300?text=Movie+6" alt="Movie 6 Poster">
@@ -101,7 +101,7 @@
             <span>4.1</span>
           </div>
         </div>
-        <a href="/movies/timeless-love" class="book-button">Book Now</a>
+        <a href="/booking" class="book-button">Book Now</a>
       </div>
     </div>
     <div class="pagination">

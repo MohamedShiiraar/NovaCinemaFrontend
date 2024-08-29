@@ -38,7 +38,7 @@ const routes = [
   },
 
   {
-    path: '/',
+    path: '/booking',
     name: 'Booking',
     component: BookingTicketView
   },
