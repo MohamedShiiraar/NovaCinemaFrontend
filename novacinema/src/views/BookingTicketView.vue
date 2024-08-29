@@ -92,7 +92,7 @@ export default {
       return this.seats.filter(seat => seat.selected).map(seat => seat.label);
     },
     totalPrice() {
-      return this.selectedSeats.length * 12.5; // Assuming $12.50 per seat
+      return this.selectedSeats.length * 120.; // Assuming R120.0 per seat
     },
   },
   methods: {
