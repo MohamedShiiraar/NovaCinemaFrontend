@@ -39,17 +39,23 @@
 </template>
 
 <script>
+import CinemaService from '@/Services/CinemaService'; 
+
 export default {
   data() {
     return {
-      cinemas: [
-        { id: 1, name: "Backdrop Cinema", location: "123 Main St, Cityville", image: "https://via.placeholder.com/300x200?text=Backdrop+Cinema" },
-        { id: 2, name: "FrontRow Cinema", location: "456 Elm St, Cityville", image: "https://via.placeholder.com/300x200?text=FrontRow+Cinema" },
-        { id: 3, name: "Steveson Rd Cinema", location: "789 Oak St, Townsville", image: "https://via.placeholder.com/300x200?text=Steveson+Cinema" },
-        { id: 4, name: "Cont Cinema", location: "101 Pine St, Metropolis", image: "https://via.placeholder.com/300x200?text=Cont+Cinema" },
-        { id: 5, name: "Cinemito Cinema", location: "202 Maple St, Rivercity", image: "https://via.placeholder.com/300x200?text=Cinemito+Cinema" }
-      ]
+      cinemas: []
     };
+  },
+  created() {
+    
+    CinemaService.getAllCinemas()
+      .then(response => {
+        this.cinemas = response.data;
+      })
+      .catch(error => {
+        console.error('Error fetching cinemas:', error);
+      });
   }
 };
 </script>
