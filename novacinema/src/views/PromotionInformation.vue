@@ -16,41 +16,72 @@
             </ul>
         </nav>
         <main>
-            <section class="featured-section">
-                <h2>Student Promotion Content</h2>
-            </section>
-            <section class="featured-section">
-                <h2>Family Promotion Content</h2>
-            </section>
-            <section class="featured-section">
-                <h2>Senior Discount Content</h2>
-            </section>
+          <h1>Promotions</h1>
+            <div v-if="loading">Loading...</div>
+            <div v-if="error">{{ error }}</div>
+            <div v-if="promotions.length">
+              <div v-for="promotion in promotions" :key="promotion.promotionID" class="promotion">
+                <section class="{{ promotion.promotionName }}">
+                  <h2>{{ promotion.promotionName }}</h2>
+                  <p>{{ promotion.promotionDescription }}</p>
+                  <p>Discount: {{ promotion.discountPercentage * 100 }}%</p>
+                  <p>Valid From: {{ new Date(promotion.validFrom).toLocaleString() }}</p>
+                  <p>Valid Until: {{ new Date(promotion.validUntil).toLocaleString() }}</p>
+                </section>
+              </div>
+            </div>
         </main>
     </div>
 </template>
   
 <script>
-    export default {
-        mounted() {
-            const section = this.$route.query.section;
-            if (section) {
-                this.scrollToSection(section);
-            }
-        },
+  import PromotionService from '@/Services/PromotionService';
+  export default {
+    data() {
+      return {
+        promotions: [],
+        loading: true,
+        error: null
+      };
+    },
 
-        methods: {
-        scrollToSection(section) {
-            const element = this.$refs[section];
-            if (element) {
-                const top = element.offsetTop;
-                window.scrollTo({ top, behavior: 'smooth' });
-                }
-            }
+    mounted() {
+      this.fetchPromotions();
+      const section = this.$route.query.section;
+          if (section) {
+              this.scrollToSection(section);
+          }
+    },
+
+    methods: {
+      scrollToSection(section) {
+          const element = this.$refs[section];
+          if (element) {
+              const top = element.offsetTop;
+              window.scrollTo({ top, behavior: 'smooth' });
+              }
+          },
+      async fetchPromotions() {
+        try {
+          const response = await PromotionService.getAllPromotions();
+          this.promotions = response.data;
+        } catch (error) {
+          this.error = "Failed to load promotions.";
+        } finally {
+          this.loading = false;
         }
-    };
+      }
+    }
+  };
 </script>
   
 <style scoped>
+.promotion {
+  border: 1px solid #ccc;
+  padding: 16px;
+  margin: 16px 0;
+}
+
 body {
     font-family: 'Roboto', sans-serif;
     margin: 0;

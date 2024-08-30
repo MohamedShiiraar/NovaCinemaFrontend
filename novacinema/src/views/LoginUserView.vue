@@ -5,6 +5,7 @@
       <li><a href="/" >Home</a></li>
       <li><a href="/movies">Movies</a></li>
       <li><a href="/cinema">Cinema</a></li>
+      <li><a href="/promotions">Promotions</a></li>
       <li class="dropdown">
       <a href="/myaccount" class="dropbtn">My Account</a>
       <div class="dropdown-content">
