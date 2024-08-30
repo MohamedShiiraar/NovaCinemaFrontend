@@ -2,15 +2,15 @@
   <div class="cinema">
     <nav>
       <ul>
-        <li><router-link to="/">Home</router-link></li>
-        <li><router-link to="/movies">Movies</router-link></li>
-        <li><router-link to="/cinema" class="active">Cinema</router-link></li>
-        <li><a href="/promotions">Promotions</a></li>
+        <li><router-link to="/" aria-label="Home">Home</router-link></li>
+        <li><router-link to="/movies" aria-label="Movies">Movies</router-link></li>
+        <li><router-link to="/cinema" class="active" aria-label="Cinema">Cinema</router-link></li>
+        <li><a href="/promotions" aria-label="Promotions">Promotions</a></li>
         <li class="dropdown">
-          <router-link to="/myaccount" class="dropbtn">My Account</router-link>
+          <a href="/myaccount" class="dropbtn">My Account</a>
           <div class="dropdown-content">
-            <router-link to="/login">Login</router-link>
-            <router-link to="/register">Register</router-link>
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
           </div>
         </li>
       </ul>
@@ -31,7 +31,19 @@
             <img :src="cinema.image" :alt="cinema.name" class="cinema-image">
             <h3>{{ cinema.name }}</h3>
             <p>{{ cinema.location }}</p>
+            <div class="cinema-reviews">
+              <span class="star-rating">★★★★☆</span>
+              <span class="review-count">(45 reviews)</span>
+              <span class="review-link" @click="$router.push({ name: 'reviews', query: { cinemaId: cinema.id } })">View/Leave Reviews</span>
+            </div>
           </div>
+          <div v-if="showModal" class="modal">
+      <div class="modal-content">
+        <span class="close" @click="showModal = false">&times;</span>
+        <h2>Reviews for {{ selectedCinema.name }}</h2>
+        <!-- Reviews content here -->
+      </div>
+    </div>
         </router-link>
       </section>
     </main>
@@ -39,23 +51,27 @@
 </template>
 
 <script>
-import CinemaService from '@/Services/CinemaService'; 
-
 export default {
   data() {
     return {
-      cinemas: []
+      cinemas: [
+        { id: 1, name: "Backdrop Cinema", location: "123 Main St, Cityville", image: "https://via.placeholder.com/300x200?text=Backdrop+Cinema" },
+        { id: 2, name: "FrontRow Cinema", location: "456 Elm St, Cityville", image: "https://via.placeholder.com/300x200?text=FrontRow+Cinema" },
+        { id: 3, name: "Steveson Rd Cinema", location: "789 Oak St, Townsville", image: "https://via.placeholder.com/300x200?text=Steveson+Cinema" },
+        { id: 4, name: "Cont Cinema", location: "101 Pine St, Metropolis", image: "https://via.placeholder.com/300x200?text=Cont+Cinema" },
+        { id: 5, name: "Cinemito Cinema", location: "202 Maple St, Rivercity", image: "https://via.placeholder.com/300x200?text=Cinemito+Cinema" }
+      ],
+      topRatedCinemas: [],
+      recentReviews: [],
+      showModal: false,
+      selectedCinema: null
     };
   },
-  created() {
-    
-    CinemaService.getAllCinemas()
-      .then(response => {
-        this.cinemas = response.data;
-      })
-      .catch(error => {
-        console.error('Error fetching cinemas:', error);
-      });
+  methods: {
+    openModal(cinema) {
+      this.selectedCinema = cinema;
+      this.showModal = true;
+    }
   }
 };
 </script>
@@ -171,4 +187,54 @@ main {
   border-radius: 8px;
   margin-bottom: 1rem;
 }
+
+.cinema-reviews {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.star-rating {
+  color: #FFD700;
+}
+
+.review-count {
+  margin-left: 0.5rem;
+  color: #666;
+}
+
+.review-link {
+  display: block;
+  margin-top: 0.5rem;
+  color: #e50914;
+  text-decoration: none;
+}
+
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 600px;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
 </style>
