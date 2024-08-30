@@ -45,15 +45,15 @@
     <section class="featured-section">
       <h2>Special Promotions</h2>
       <div class="promotions">
-        <div class="promo-card">
+        <div v-for="promotion in promotions" :key="promotion.promotionID" class="promo-card">
           <img src="https://via.placeholder.com/300x150?text=Student+Discount" alt="Student Discount Promotion">
           <div class="promo-info">
-            <h3>Student Discount</h3>
-            <p>Get 20% off on all movie tickets with your student ID</p>
-            <router-link :to="{ name: 'Promotions', query: { section: 'student' } }" class="promo-button">Learn More</router-link>
+            <h2>{{ promotion.promotionName }}</h2>
+            <p>{{ promotion.promotionDescription }}</p>
+            <router-link :to="{ name: 'Promotions', query: { section: '{{ promotion.promotionName }}' } }" class="promo-button">Learn More</router-link>
           </div>
         </div>
-        <div class="promo-card">
+        <!-- <div class="promo-card">
           <img src="https://via.placeholder.com/300x150?text=Family+Package" alt="Family Package Promotion">
           <div class="promo-info">
             <h3>Family Package</h3>
@@ -68,7 +68,7 @@
             <p>Enjoy special discounts for our senior moviegoers</p>
             <router-link :to="{ name: 'Promotions', query: { section: 'senior' } }" class="promo-button">Learn More</router-link>
           </div>
-        </div>
+        </div> -->
       </div>
     </section>
   </main>
@@ -81,17 +81,30 @@
 
 <script>
 import MovieService from "@/Services/MovieService";
+import PromotionService from '@/Services/PromotionService';
 
 export default {
   data() {
     return {
+      promotions: [],
       movies: [], // Initialize movies array
     };
   },
   created() {
+    this.fetchPromotions();
     this.fetchMovies();
   },
   methods: {
+    async fetchPromotions() {
+        try {
+          const response = await PromotionService.getAllPromotions();
+          this.promotions = response.data;
+        } catch (error) {
+          this.error = "Failed to load promotions.";
+        } finally {
+          this.loading = false;
+        }
+      },
     async fetchMovies() {
       MovieService.getAllMovies()
       .then(response => {
