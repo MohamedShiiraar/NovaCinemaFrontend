@@ -1,15 +1,15 @@
 <template>
   <div class="booking-container">
-    <h2>Book Tickets for {{ movie.title }}</h2>
     <div class="movie-info">
       <div class="movie-poster">
         <img :src="movie.poster" alt="A dramatic movie poster for Galactic Uprising" />
       </div>
       <div class="movie-details">
-        <h3>{{ movie.title }}</h3>
-        <p>{{ movie.genre }} | {{ movie.duration }} | {{ movie.rating }}</p>
-        <p>Director: {{ movie.director }}</p>
-        <p>Stars: {{ movie.stars }}</p>
+        <h3 style="text-align: center;font-weight: bold;">{{ movie.title }}</h3>
+        <p style="text-align: center;font-weight: bold;"> {{ movie.duration }} | {{ movie.ageRestriction }}</p>
+        <p style="text-align: center;font-weight: bold;text-transform: capitalize;">{{ movie.genre }}</p>
+        <p style="text-align: center;">{{ movie.movieDescription }}</p>
+
       </div>
     </div>
 
@@ -58,10 +58,10 @@
 
     <div class="booking-summary">
       <h3>Booking Summary</h3>
-      <p>Date: {{ selectedDate || 'Not selected' }}</p>
-      <p>Time: {{ selectedTime || 'Not selected' }}</p>
-      <p>Seats: {{ selectedSeats.join(', ') || 'None' }}</p>
-      <p>Total: R{{ totalPrice.toFixed(2) }}</p>
+      <p style="font-weight: bold;">Date: {{ selectedDate || 'Not selected' }}</p>
+      <p style="font-weight: bold;">Time: {{ selectedTime || 'Not selected' }}</p>
+      <p style="font-weight: bold;">Seats: {{ selectedSeats.join(', ') || 'None' }}</p>
+      <p style="font-weight: bold;">Total: R{{ totalPrice.toFixed(2) }}</p>
     </div>
     <button class="cta-button" @click="confirmBooking">Confirm Booking</button>
   </div>
@@ -72,13 +72,13 @@ export default {
   data() {
     return {
       movie: {
-        title: 'Galactic Uprising',
-        poster: 'https://page-images.websim.ai/Action-packed sci-fi thriller poster_200x300xrjuQitOMQEdSQdeGSx77f44aa985e6b.jpg',
-        genre: 'Sci-Fi, Action',
-        duration: '2h 15min',
-        rating: 'PG-13',
-        director: 'Ava DuVernay',
-        stars: 'Emily Zhao, Michael Okonkwo, Sofia Rodriguez',
+        title: this.$route.query.title || 'Unknown Title',
+        poster: this.$route.query.poster || 'https://via.placeholder.com/200x300?text=No+Image',
+        genre: this.$route.query.genre || 'Unknown Genre',
+        duration: this.$route.query.duration || 'Unknown Duration',
+        ageRestriction: this.$route.query.ageRestriction || 'Unrated',
+        movieDescription: this.$route.query.movieDescription || 'Unknown Director',
+        stars: this.$route.query.stars || 'Unknown Stars'
       },
       availableDates: ['Tue, May 9', 'Wed, May 10', 'Thu, May 11', 'Fri, May 12', 'Sat, May 13'],
       availableTimes: ['10:00 AM', '1:30 PM', '4:45 PM', '8:00 PM', '10:30 PM'],
@@ -92,7 +92,7 @@ export default {
       return this.seats.filter(seat => seat.selected).map(seat => seat.label);
     },
     totalPrice() {
-      return this.selectedSeats.length * 120.; // Assuming R120.0 per seat
+      return this.selectedSeats.length * 120.; 
     },
   },
   methods: {
@@ -101,7 +101,7 @@ export default {
       for (let i = 0; i < 100; i++) {
         seats.push({
           label: String.fromCharCode(65 + Math.floor(i / 10)) + (i % 10 + 1),
-          occupied: Math.random() < 0.2, // 20% chance of a seat being occupied
+          occupied: Math.random() < 0.2, 
           selected: false,
         });
       }
@@ -109,7 +109,7 @@ export default {
     },
     selectDate(date) {
       this.selectedDate = date;
-      this.selectedTime = null; // Reset time when date changes
+      this.selectedTime = null; 
     },
     selectTime(time) {
       this.selectedTime = time;
@@ -131,7 +131,6 @@ export default {
       `;
       alert(`Booking confirmed!\n\n${bookingDetails}\n\nEnjoy your movie!`);
 
-      // Redirect to the confirmation page with query parameters
       this.$router.push({
         path: '/confirmation',
         query: {
@@ -165,7 +164,7 @@ body {
 }
 h2 {
   margin-top: 0;
-  color: #e50914;
+  color: black;
 }
 .movie-info {
   display: flex;

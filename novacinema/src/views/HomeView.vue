@@ -3,7 +3,10 @@
    <nav>
     <ul>
       <li><a href="/" class="active">Home</a></li>
-      <li><a href="/movies">Movies</a></li>
+      <li class="add-movie">
+      <a href="/movies">Movies</a>
+      <a href="/add-movie" class="add-movie-button" style="font-size: small;">Add a Movie</a>
+    </li>
       <li><a href="/cinema">Cinema</a></li>
       <li><a href="/promotions">Promotions</a></li>
       <li class="dropdown">
@@ -25,57 +28,17 @@
     </section>
     
     <section class="featured-section">
-      <h2>Featured Movies</h2>
+      <h2> Now Showing </h2>
       <div class="movie-carousel">
-        <div class="movie-card">
-          <img src="https://via.placeholder.com/200x300?text=Movie+1" alt="Movie 1 Poster">
-          <div class="movie-info">
-            <h3>Movie Title 1</h3>
-            <p>Genre: Action</p>
+        <div v-for="movie in movies" :key="movie.id" class="movie-card">
+            <img :src="movie.posterUrl || 'https://via.placeholder.com/200x300?text=No+Image'" :alt="movie.title + ' Poster'">
+            <div class="movie-info">
+              <h3 style="text-align: center;" >{{ movie.name }}</h3>
+              <p style="font-weight: bold;" >Genre: {{ movie.genre }}</p>
+              <p style="font-weight: bold;">Duration: {{ movie.duration }}</p>
+            </div>
           </div>
-        </div>
-        <div class="movie-card">
-          <img src="https://via.placeholder.com/200x300?text=Movie+2" alt="Movie 2 Poster">
-          <div class="movie-info">
-            <h3>Movie Title 2</h3>
-            <p>Genre: Comedy</p>
-          </div>
-        </div>
-        <div class="movie-card">
-          <img src="https://via.placeholder.com/200x300?text=Movie+3" alt="Movie 3 Poster">
-          <div class="movie-info">
-            <h3>Movie Title 3</h3>
-            <p>Genre: Drama</p>
-          </div>
-        </div>
-        <div class="movie-card">
-          <img src="https://via.placeholder.com/200x300?text=Movie+4" alt="Movie 4 Poster">
-          <div class="movie-info">
-            <h3>Movie Title 4</h3>
-            <p>Genre: Sci-Fi</p>
-          </div>
-        </div>
-        <div class="movie-card">
-          <img src="https://via.placeholder.com/200x300?text=Movie+5" alt="Movie 5 Poster">
-          <div class="movie-info">
-            <h3>Movie Title 5</h3>
-            <p>Genre: Horror</p>
-          </div>
-        </div>
-        <div class="movie-card">
-          <img src="https://via.placeholder.com/200x300?text=Movie+6" alt="Movie 6 Poster">
-          <div class="movie-info">
-            <h3>Movie Title 6</h3>
-            <p>Genre: Horror</p>
-          </div>
-        </div>
-        <div class="movie-card">
-          <img src="https://via.placeholder.com/200x300?text=Movie+7" alt="Movie 7 Poster">
-          <div class="movie-info">
-            <h3>Movie Title 7</h3>
-            <p>Genre: Horror</p>
-          </div>
-        </div>
+        
       </div>
     </section>
     
@@ -117,10 +80,30 @@
 </template>
 
 <script>
+import MovieService from "@/Services/MovieService";
 
 export default {
-
-}
+  data() {
+    return {
+      movies: [], // Initialize movies array
+    };
+  },
+  created() {
+    this.fetchMovies();
+  },
+  methods: {
+    async fetchMovies() {
+      MovieService.getAllMovies()
+      .then(response => {
+        this.movies = response.data;
+        console.log('Movies fetched:', this.movies); // Debug log
+      })
+      .catch(error => {
+        console.error("Error fetching movies:", error);
+      });
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -159,6 +142,35 @@ body {
   nav ul li a.active {
     color: #e50914;
   }
+
+  .add-movie {
+  position: relative;
+}
+
+.add-movie-button {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #e50914;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  font-size: 0.9rem; 
+  font-weight: bold; 
+  text-transform: uppercase; 
+}
+
+.add-movie:hover .add-movie-button {
+  display: block;
+}
+
+.add-movie-button:hover {
+  background-color: #ff0a16;
+}
   main {
     max-width: 1200px;
     margin: 2rem auto;
@@ -215,17 +227,37 @@ body {
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
+    padding: 0 1rem; 
+  margin: 0 -1rem; 
   }
+
+  .movie-carousel::-webkit-scrollbar {
+  display: none; 
+}
+.movie-carousel {
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+}
   .movie-card {
     flex: 0 0 auto;
-    width: 200px;
-    margin-right: 1rem;
-    background-color: #fff;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    scroll-snap-align: start;
-  }
+  width: 200px;
+  margin-right: 1rem;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  scroll-snap-align: start;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.promo-card:hover {
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5); 
+  transform: scale(1.05); 
+}
+.movie-card:hover {
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5); 
+  transform: scale(1.05); 
+}
   .movie-card img {
     width: 100%;
     height: 300px;
@@ -251,6 +283,7 @@ body {
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
   }
   .promo-card img {
     width: 100%;

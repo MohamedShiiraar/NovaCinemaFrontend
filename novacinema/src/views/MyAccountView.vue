@@ -28,14 +28,20 @@
         <div v-if="currentSection === 'profile'">
           <h2 class="h5">Profile Information</h2>
           <form class="profile-info" @submit.prevent="saveProfile">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" value="Name">
-        <label for="surname">Surname:</label>
-        <input type="tel" id="surname" name="surname" value="Surname">
+            <label for="name">Name:</label>
+            <input type="text" id="name" v-model="loggedInUser.name">
+            
+            <label for="surname">Surname:</label>
+            <input type="text" id="surname" v-model="loggedInUser.surname">
 
-        <label for="emailAddress">Email:</label>
-        <input type="emailAddress" id="emailAddress" name="emailAddress" value="Email">
-        
+            <label for="emailAddress">Email:</label>
+            <input type="email" id="emailAddress" v-model="loggedInUser.emailAddress">
+
+            <label for="password">Current Password:</label>
+            <input type="password" id="password" v-model="loggedInUser.password">
+
+            <label for="password">New Password:</label>
+            <input type="password" id="password" >
         
         <label for="language">Preferred Language:</label>
         <select id="language" name="language">
@@ -50,7 +56,7 @@
           </form>
         </div>
 
-        Payment Methods
+        
         <div v-if="currentSection === 'payment'">
           <h2 class="h5">Payment Methods</h2>
           <ul class="cards-list">
@@ -60,20 +66,20 @@
             </li>
           </ul>
           <form class="add-card-form" @submit.prevent="addCard">
-            <label for="card-number">Card Number:</label>
-            <input type="text" id="card-number" v-model="newCard.number" placeholder="Card Number" required>
+            <label for="card-number" style="padding-bottom: 2px;">Card Number:</label>
+            <input type="text" style="padding-bottom: 2px" id="card-number" v-model="newCard.number" placeholder="Card Number" required>
 
-            <label for="expiry-date">Expiry Date:</label>
+            <label for="expiry-date" style="padding-bottom: 2px;padding-top: 10px;">Expiry Date:</label>
             <input type="text" id="expiry-date" v-model="newCard.expiry" placeholder="MM/YY" required>
 
-            <label for="cvc">CVC:</label>
+            <label for="cvc" style="padding-bottom: 2px;padding-top: 10px;">CVC:</label>
             <input type="text" id="cvc" v-model="newCard.cvc" placeholder="CVC" required>
 
             <button type="submit" class="save-button">Add Card</button>
           </form>
         </div>
 
-        My Bookings
+       
         <div v-if="currentSection === 'bookings'">
           <h2 class="h5">My Bookings</h2>
           <p>Booking details would go here.</p>
@@ -138,8 +144,7 @@ export default {
           name: user.name,
           surname: user.surname || '',
           emailAddress: user.emailAddress,
-          dob: user.dob || '',
-          address: user.address || '',
+          password: user.password,
           language: user.language || 'en'
         };
       }
@@ -238,7 +243,7 @@ nav {
   }
   .h5 {
     margin-top: 0;
-    color: #e50914;
+    color: black;
   }
   .profile-info {
     display: grid;
@@ -256,7 +261,7 @@ nav {
     border-radius: 4px;
   }
   .save-button {
-    background-color: #e50914;
+    background-color: black;
     color: #fff;
     border: none;
     padding: 0.8rem 1.5rem;
@@ -268,6 +273,43 @@ nav {
     margin-top: 1rem;
   }
   .save-button:hover {
-    background-color: #ff0a16;
+    background-color: green;
   }
+
+  .cards-list {
+  margin-top: 1rem; /* Space between Payment Methods heading and the first card entry */
+}
+
+.card-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  margin-bottom: 2rem; 
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-item span {
+  flex-grow: 1;
+}
+
+.card-item button {
+  background-color: #e50914;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 0.8rem; 
+  font-size: 0.75rem; 
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  max-width: 100px; 
+  width: auto; 
+}
+
+.card-item button:hover {
+  background-color: #ff0a16;
+}
 </style>

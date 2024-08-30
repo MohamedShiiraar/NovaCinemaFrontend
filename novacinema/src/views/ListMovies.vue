@@ -41,15 +41,12 @@
         <div v-for="movie in filteredMovies" :key="movie.id" class="movie-card">
           <img :src="movie.posterUrl || 'https://via.placeholder.com/200x300?text=No+Image'" :alt="movie.title + ' Poster'">
           <div class="movie-info">
-            <h3>{{ movie.name }}</h3>
-            <p>Genre: {{ movie.genre }}</p>
-            <p>Rating: {{ movie.duration }}</p>
-            <div class="rating">
-              <span class="star">★★★★</span>
-              <span>{{ movie.ratingScore }}</span>
-            </div>
+            <h3 style="text-align: center;" >{{ movie.name }}</h3>
+            <p style="font-weight: bold;">Genre: {{ movie.genre }}</p>
+            <p style="font-weight: bold;">Duration: {{ movie.duration }}</p>
+            <p style="font-weight: bold;">Age Restriction: {{ movie.ageRestriction }}</p>
           </div>
-          <a href="/booking" class="book-button">Book Now</a>
+          <a @click="openBookingView(movie)" class="book-button">Book Now</a>
         </div>
       </div>
       <div class="pagination">
@@ -80,17 +77,31 @@ export default {
     const filtered = this.movies.filter(movie => {
       return (movie.title || '').toLowerCase().includes((this.searchTerm || '').toLowerCase());
     });
-    console.log('Filtered movies:', filtered); // Debug log
+    console.log('Filtered movies:', filtered); 
     return filtered;
   }
     
   },
   methods: {
+    openBookingView(movie) {
+    this.$router.push({
+      path: '/booking',
+      query: {
+        title: movie.name,
+        poster: movie.posterUrl,
+        genre: movie.genre,
+        duration: movie.duration,
+        ageRestriction: movie.ageRestriction,
+        movieDescription: movie.movieDescription,
+        stars: movie.stars
+      }
+    });
+  },
     fetchMovies() {
     MovieService.getAllMovies()
       .then(response => {
         this.movies = response.data;
-        console.log('Movies fetched:', this.movies); // Debug log
+        console.log('Movies fetched:', this.movies); 
       })
       .catch(error => {
         console.error("Error fetching movies:", error);
@@ -156,23 +167,29 @@ nav {
     gap: 2rem;
   }
   .movie-card {
-    background-color: #fff;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-  }
-  .movie-card:hover {
-    transform: translateY(-5px);
-  }
-  .movie-card img {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-  }
-  .movie-info {
-    padding: 1rem;
-  }
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  height: 100%; /* Ensures the card takes full height in grid */
+}
+.movie-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5); 
+  transform: scale(1.05); 
+}
+.movie-card img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+.movie-info {
+  padding: 1rem;
+  flex: 1; /* Allows info section to grow and push the button down */
+}
   .movie-info h3 {
     margin: 0 0 0.5rem 0;
     font-size: 1.2rem;
@@ -191,21 +208,22 @@ nav {
     color: #ffd700;
   }
   .book-button {
-    display: block;
-    width: 100%;
-    padding: 0.8rem;
-    background-color: #e50914;
-    color: #fff;
-    text-align: center;
-    text-decoration: none;
-    border: none;
-    border-radius: 4px;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-  }
-  .book-button:hover {
-    background-color: #ff0a16;
-  }
+  display: block;
+  width: 100%;
+  padding: 0.8rem;
+  background-color: #e50914;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  margin-top: auto; /* Pushes button to the bottom */
+}
+.book-button:hover {
+  background-color: #ff0a16;
+}
   .pagination {
     display: flex;
     justify-content: center;
