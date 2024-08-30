@@ -34,7 +34,7 @@
             <div class="cinema-reviews">
               <span class="star-rating">★★★★☆</span>
               <span class="review-count">(45 reviews)</span>
-              <span class="review-link" @click="openModal(cinema)">View/Leave Reviews</span>
+              <span class="review-link" @click="$router.push({ name: 'reviews', query: { cinemaId: cinema.id } })">View/Leave Reviews</span>
             </div>
           </div>
           <div v-if="showModal" class="modal">
