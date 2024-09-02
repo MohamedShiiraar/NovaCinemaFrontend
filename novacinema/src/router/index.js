@@ -9,6 +9,7 @@ import ConfirmationView from '@/views/ConfirmationView.vue'
 import PromotionInformation from '@/views/PromotionInformation.vue'
 import ListCinemaView from '@/views/ListCinemaView.vue'
 import AddMovie from '@/views/AddMovie.vue'
+import ReviewsView from '@/views/ReviewsView.vue';
 
 
 const routes = [
@@ -65,13 +66,17 @@ const routes = [
     path: '/add-movie',
     name: 'AddMovie',
     component: AddMovie
-  }
-
+  },
+  {
+    path: '/reviews',
+    name: 'reviews',
+    component: ReviewsView,
+  },
 ]
-
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
+
 
 export default router
