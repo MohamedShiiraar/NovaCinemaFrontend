@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ListMovies from '@/views/ListMovies.vue'
 import RegisterUserView from '@/views/RegisterUserView.vue'
-import LoginUserView from '@/views/LoginUserView.vue'
 import MyAccountView from '@/views/MyAccountView.vue'
 import BookingTicketView from '@/views/BookingTicketView.vue'
 import ConfirmationView from '@/views/ConfirmationView.vue'
@@ -15,6 +14,9 @@ import AdminDashboard from '@/views/AdminDashboardView.vue' // Corrected to refe
 import ManageMovies from '@/views/ManageMoviesView.vue' // Add this if you want routes for managing movies
 import ManageUsers from '@/views/ManageUserView.vue' // Add this if you want routes for managing users
 import ViewReports from '@/views/ViewReports.vue' // Add this if you want routes for viewing reports
+import AdminPage from '@/views/AdminPage.vue'
+import LoginUserView from '@/views/LoginUserView.vue'
+
 
 const routes = [
   {
@@ -83,6 +85,7 @@ const routes = [
     component: AdminDashboard
   },
   {
+
     path: '/manage-movies',
     name: 'ManageMovies',
     component: ManageMovies
@@ -97,6 +100,11 @@ const routes = [
     name: 'ViewReports',
     component: ViewReports
   }
+    path: '/admin',
+    name: 'admin',
+    component: AdminPage,
+},
+
 ]
 
 const router = createRouter({
