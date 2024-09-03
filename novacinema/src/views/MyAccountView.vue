@@ -81,7 +81,7 @@
 
        
         <div v-if="currentSection === 'bookings'">
-          <h2 class="h5">My Bookings</h2>
+          <h2 class="h5">My Bookings</h2>    // Add history of movies watched
           <p>Booking details would go here.</p>
         </div>
       </section>

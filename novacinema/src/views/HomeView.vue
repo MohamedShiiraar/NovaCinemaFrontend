@@ -16,6 +16,7 @@
         <a href="/register">Register</a>
       </div>
     </li>
+    <li><a href="/admin-dashboard">Admin</a></li>
     </ul>
   </nav> 
   <main>
