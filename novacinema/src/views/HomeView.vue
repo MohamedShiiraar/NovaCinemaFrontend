@@ -1,24 +1,5 @@
 <template>
   <div class="home">
-   <nav>
-    <ul>
-      <li><a href="/" class="active">Home</a></li>
-      <li class="add-movie">
-      <a href="/movies">Movies</a>
-      <a href="/add-movie" class="add-movie-button" style="font-size: small;">Add a Movie</a>
-    </li>
-      <li><a href="/cinema">Cinema</a></li>
-      <li><a href="/promotions">Promotions</a></li>
-      <li class="dropdown">
-      <a href="/myaccount" class="dropbtn">My Account</a>
-      <div class="dropdown-content">
-        <a href="/login">Login</a>
-        <a href="/register">Register</a>
-      </div>
-    </li>
-    <li><a href="/admin-dashboard">Admin</a></li>
-    </ul>
-  </nav> 
   <main>
     <section class="hero">
       <div class="hero-content">
@@ -88,7 +69,8 @@ export default {
   data() {
     return {
       promotions: [],
-      movies: [], // Initialize movies array
+      movies: [], 
+      loggedInUser: JSON.parse(localStorage.getItem('loggedInUser')) || {}
     };
   },
   created() {
@@ -116,8 +98,13 @@ export default {
         console.error("Error fetching movies:", error);
       });
     },
-  },
-};
+    logout() {
+    localStorage.removeItem('loggedInUser');
+      this.loggedInUser = {};
+      this.$router.push('/'); 
+    }
+  }
+  };
 </script>
 
 <style scoped>
@@ -346,5 +333,22 @@ body {
 
 .dropdown:hover .dropdown-content {
     display: block;
+}
+
+.dropdown-content button {
+  background-color: #e50914;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 0.8rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%; /* Full width */
+}
+
+.dropdown-content button:hover {
+  background-color: #ff0a16;
 }
 </style>

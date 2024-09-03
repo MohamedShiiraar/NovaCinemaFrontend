@@ -1,20 +1,5 @@
 <template>
     <div>
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/movies">Movies</a></li>
-                <li><a href="/cinema">Cinema</a></li>
-                <li><a href="/promotions" class="active">Promotions</a></li>
-                <li class="dropdown">
-                <a href="/myaccount" class="dropbtn">My Account</a>
-                <div class="dropdown-content">
-                    <a href="/login">Login</a>
-                    <a href="/register">Register</a>
-                </div>
-                </li>
-            </ul>
-        </nav>
         <main>
           <h1>Promotions</h1>
             <div v-if="loading">Loading...</div>

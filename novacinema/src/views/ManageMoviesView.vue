@@ -29,7 +29,7 @@
             <td>
               <button @click="editMovie(movie.movieID)">Edit</button>
               <button @click="deleteMovie(movie.movieID)">Delete</button>
-              <button @click="toggleAdminStatus(user.userID)" v-if="!user.isAdmin">Make Admin</button>
+            
             </td>
           </tr>
         </tbody>
@@ -39,19 +39,19 @@
         <h2>Add Movie</h2>
         <form @submit.prevent="addMovie">
           <label for="title">Title:</label>
-          <input type="text" v-model="newMovie.name" id="title" required>
+          <input type="text" v-model="newMovie.name" id="name" required>
 
           <label for="genre">Description:</label>
-          <input type="text" v-model="newMovie.movieDescription" id="genre" required>
+          <input type="text" v-model="newMovie.movieDescription" id="movieDescription" required>
 
           <label for="genre">Genre:</label>
           <input type="text" v-model="newMovie.genre" id="genre" required>
   
           <label for="genre">Duration:</label>
-          <input type="text" v-model="newMovie.duration" id="genre" required>
+          <input type="text" v-model="newMovie.duration" id="duration" required>
 
           <label for="genre">Age Restriction:</label>
-          <input type="text" v-model="newMovie.ageRestriction" id="genre" required>
+          <input type="text" v-model="newMovie.ageRestriction" id="ageRestriction" required>
   
           <button type="submit">Add</button>
           <button @click="closeDialog">Cancel</button>
@@ -75,7 +75,8 @@ import MovieService from '@/Services/MovieService';
         genre: "",
         duration: "",
         ageRestriction: "",
-        }
+        },
+        loggedInUser: {}
       }
     },
     methods: {

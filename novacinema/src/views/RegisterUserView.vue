@@ -1,20 +1,5 @@
 <template>
   <div class="registeruser">
-    <nav>
-    <ul>
-      <li><a href="/" >Home</a></li>
-      <li><a href="/movies">Movies</a></li>
-      <li><a href="/cinema">Cinema</a></li>
-      <li><a href="/promotions">Promotions</a></li>
-      <li class="dropdown">
-      <a href="/myaccount" class="dropbtn">My Account</a>
-      <div class="dropdown-content">
-        <a href="/login">Login</a>
-        <a href="/register">Register</a>
-      </div>
-    </li>
-    </ul>
-  </nav>
   <div class="register-container">
     <h1>Register</h1>
     <form @submit.prevent="handleRegister">
@@ -145,6 +130,7 @@ nav {
   border: 1px solid #ddd;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
 }
 
 .form-group {

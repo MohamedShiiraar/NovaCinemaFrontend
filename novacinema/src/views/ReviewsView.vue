@@ -26,9 +26,9 @@ export default {
   props: ['cinemas'],
   data() {
     return {
-      cinemaName: "", // This will be dynamically set based on the cinema
+      cinemaName: "", 
       reviews: [
-        // Example reviews data
+       
         { id: 1, author: "John Doe", content: "Great cinema!", rating: 4 },
         { id: 2, author: "Jane Smith", content: "Good selection of movies.", rating: 5 }
       ],
@@ -40,22 +40,22 @@ export default {
   },
   methods: {
     submitReview() {
-      // Here, you would normally send the new review to the server
+      
       const newReview = {
         id: this.reviews.length + 1,
-        author: "Anonymous", // In a real app, you'd use the logged-in user's name
+        author: "Anonymous", 
         content: this.newReview.content,
         rating: this.newReview.rating
       };
       this.reviews.push(newReview);
-      // Emit an event to update the review count
+      
       this.$emit('review-submitted', this.$route.query.cinemaId);
-      // Clear the form
+      
       this.newReview.content = "";
       this.newReview.rating = null;
     },
     getCinemaName(id) {
-      // Ensure cinemas is defined before accessing it
+      
       if (this.cinemas) {
         const cinema = this.cinemas.find(cinema => cinema.id === Number(id));
         return cinema ? cinema.name : "Unknown Cinema";
@@ -64,7 +64,7 @@ export default {
     }
   },
   mounted() {
-    // Example of setting the cinema name based on the query parameter
+   
     const cinemaId = this.$route.query.cinemaId;
     this.cinemaName = this.getCinemaName(cinemaId);
   }

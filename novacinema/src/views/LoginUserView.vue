@@ -1,20 +1,5 @@
 <template>
   <div class="login">
-    <nav>
-    <ul>
-      <li><a href="/" >Home</a></li>
-      <li><a href="/movies">Movies</a></li>
-      <li><a href="/cinema">Cinema</a></li>
-      <li><a href="/promotions">Promotions</a></li>
-      <li class="dropdown">
-      <a href="/myaccount" class="dropbtn">My Account</a>
-      <div class="dropdown-content">
-        <a href="/login">Login</a>
-        <a href="/register">Register</a>
-      </div>
-    </li>
-    </ul>
-  </nav>
   <div class="login-container">
     <h1>Login</h1>
     <form @submit.prevent="handleLogin">

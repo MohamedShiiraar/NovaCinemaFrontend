@@ -1,20 +1,5 @@
 <template>
   <div class="movies">
-    <nav>
-      <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/" class="active">Movies</a></li>
-        <li><a href="/cinema">Cinema</a></li>
-        <li><a href="/promotions">Promotions</a></li>
-        <li class="dropdown">
-          <a href="/myaccount" class="dropbtn">My Account</a>
-          <div class="dropdown-content">
-            <a href="/login">Login</a>
-            <a href="/register">Register</a>
-          </div>
-        </li>
-      </ul>
-    </nav>
     <main>
       <h2>Now Showing</h2>
       <div class="filters">

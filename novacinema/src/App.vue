@@ -2,14 +2,21 @@
   <header>
     <router-link to="/">
       <h1><span>Nova </span>Cinema</h1>
+      
     </router-link>
   </header>
+  <NavBar />
   <main>
     <router-view :cinemas="cinemas" @review-submitted="addReview"></router-view>
   </main>
 </template>
 <script>
+import NavBar from './components/NavBar.vue';
+
 export default {
+  components: {
+    NavBar
+  },
   data() {
     return {
       cinemas: [

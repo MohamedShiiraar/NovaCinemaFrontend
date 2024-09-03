@@ -1,20 +1,5 @@
 <template>
   <div class="cinema">
-    <nav>
-      <ul>
-        <li><router-link to="/" aria-label="Home">Home</router-link></li>
-        <li><router-link to="/movies" aria-label="Movies">Movies</router-link></li>
-        <li><router-link to="/cinema" class="active" aria-label="Cinema">Cinema</router-link></li>
-        <li><a href="/promotions" aria-label="Promotions">Promotions</a></li>
-        <li class="dropdown">
-          <a href="/myaccount" class="dropbtn">My Account</a>
-          <div class="dropdown-content">
-            <a href="/login">Login</a>
-            <a href="/register">Register</a>
-          </div>
-        </li>
-      </ul>
-    </nav>
     <header>
       <h1>Our Cinemas</h1>
     </header>
