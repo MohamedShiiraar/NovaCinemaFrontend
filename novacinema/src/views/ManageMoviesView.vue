@@ -9,32 +9,49 @@
           <tr>
             <th>ID</th>
             <th>Title</th>
+            <th>Movie Description</th>
             <th>Genre</th>
+            <th>Duration</th>
+            <th>Age Restriction</th>
             <th>Actions</th>
+            
           </tr>
         </thead>
-        <tbody>
-          <tr v-for="movie in movies" :key="movie.id">
-            <td>{{ movie.id }}</td>
-            <td>{{ movie.title }}</td>
-            <td>{{ movie.genre }}</td>
+        <tbody style="text-align: center;">
+          <tr v-for="movie in movies" :key="movie.movieID">
+            <td>{{ movie.movieID }}</td>
+            <td>{{ movie.name }}</td>
+            <td>{{ movie.movieDescription }}</td>
+            <td>{{ movie.genre.name }}</td>
+            <td>{{ movie.duration }}</td>
+            <td>{{ movie.ageRestriction }}</td>
+
             <td>
-              <button @click="editMovie(movie.id)">Edit</button>
-              <button @click="deleteMovie(movie.id)">Delete</button>
+              <button @click="editMovie(movie.movieID)">Edit</button>
+              <button @click="deleteMovie(movie.movieID)">Delete</button>
+              <button @click="toggleAdminStatus(user.userID)" v-if="!user.isAdmin">Make Admin</button>
             </td>
           </tr>
         </tbody>
       </table>
   
-      <!-- Add Movie Dialog (Placeholder) -->
       <div v-if="isDialogOpen" class="dialog">
         <h2>Add Movie</h2>
         <form @submit.prevent="addMovie">
           <label for="title">Title:</label>
-          <input type="text" v-model="newMovie.title" id="title" required>
-  
+          <input type="text" v-model="newMovie.name" id="title" required>
+
+          <label for="genre">Description:</label>
+          <input type="text" v-model="newMovie.movieDescription" id="genre" required>
+
           <label for="genre">Genre:</label>
           <input type="text" v-model="newMovie.genre" id="genre" required>
+  
+          <label for="genre">Duration:</label>
+          <input type="text" v-model="newMovie.duration" id="genre" required>
+
+          <label for="genre">Age Restriction:</label>
+          <input type="text" v-model="newMovie.ageRestriction" id="genre" required>
   
           <button type="submit">Add</button>
           <button @click="closeDialog">Cancel</button>
@@ -44,19 +61,33 @@
   </template>
   
   <script>
+import MovieService from '@/Services/MovieService';
+
   export default {
     name: 'ManageMoviesView',
     data() {
       return {
-        movies: [], // Replace with actual data fetching
+        movies: [], 
         isDialogOpen: false,
         newMovie: {
-          title: '',
-          genre: ''
+        name: "",
+        movieDescription: "",
+        genre: "",
+        duration: "",
+        ageRestriction: "",
         }
       }
     },
     methods: {
+      fetchMovies() {
+      MovieService.getAllMovies()
+        .then((response) => {
+          this.movies = response.data;
+        })
+        .catch((error) => {
+          console.error("There was an error fetching the movies:", error);
+        });
+    },
       showAddMovieDialog() {
         this.isDialogOpen = true;
       },
@@ -64,22 +95,26 @@
         this.isDialogOpen = false;
       },
       addMovie() {
-        // Logic to add a movie
-        this.movies.push({ ...this.newMovie, id: Date.now() });
-        this.newMovie.title = '';
-        this.newMovie.genre = '';
-        this.closeDialog();
-      },
+        MovieService.createMovie(this.newMovie)
+        .then(() => {
+          this.fetchMovies(); 
+          this.closeDialog();
+        })
+        .catch((error) => {
+          console.error("There was an error adding the movie:", error);
+        });
+    },
       editMovie(id) {
-        // Logic to edit a movie
-        console.log('Editing movie with ID:', id); // Placeholder for actual implementation
+        console.log('Editing movie with ID:', id); 
       },
       deleteMovie(id) {
-        // Logic to delete a movie
         this.movies = this.movies.filter(movie => movie.id !== id);
       }
-    }
-  }
+    },
+    mounted() {
+    this.fetchMovies(); 
+  },
+  };
   </script>
   
   <style scoped>

@@ -20,7 +20,7 @@ class UserService {
 
   // Update a user
   updateUser(user) {
-    console.log(user);
+    console.log("Data SENDING TO BACKEND",user);
     return axios.post(`${USER_API_BASE_URL}/update`, user);
   }
 }

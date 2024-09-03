@@ -1,41 +1,56 @@
 <template>
-    <div class="admin-dashboard">
-      <aside class="sidebar">
-        <ul>
-          <li><a href="/manage-movies"> Manage Movies</a></li>
-                    
-          <li><a href="/manage-users">Manage Users</a></li>
-          
-          <li @click="logout">Logout</li>
-        </ul>
-      </aside>
-  
-      <section class="content">
-        <router-view></router-view>
-      </section>
-    </div>
-  </template>
+  <div class="admin-dashboard">
+    <aside class="sidebar">
+      <ul>
+        <li @click="showSection('movies')">Manage Movies</li>
+        <li @click="showSection('users')">Manage Users</li>
+        <li @click="showSection('cinemas')">Manage Cinemas</li>
+        <li @click="showSection('promotions')">Manage Promotions</li>
+        <li @click="logout">Logout</li>
+      </ul>
+    </aside>
+
+    <section class="content">
+      <div v-if="currentSection === 'movies'">
+        <manage-movies-view />
+      </div>
+      <div v-if="currentSection === 'users'">
+        <manage-user-view />
+      </div>
+      <div v-if="currentSection === 'cinemas'">
+        <h2>Manage Cinemas</h2>
+      </div>
+      <div v-if="currentSection==='promotions'">
+        <h2>Manage Promotions</h2>
+      </div>
+    </section>
+  </div>
+</template>
   
   <script>
+  import ManageMoviesView from './ManageMoviesView.vue';
+  import ManageUserView from './ManageUserView.vue';
   export default {
-    methods: {
-        goToManageMovies() {
-      this.$router.push({ name: 'ManageMovies' });
+  components: {
+    ManageMoviesView,
+    ManageUserView, 
+  },
+    ManageUserView,
+  data() {
+    return {
+      currentSection: null, 
+    };
+  },
+  methods: {
+    showSection(section) {
+      this.currentSection = section;
     },
-    goToManageUsers() {
-      this.$router.push({ name: 'ManageUsers' });
+    logout() {
+      this.$router.push({ name: 'Login' });
     },
-    goToViewReports() {
-      this.$router.push({ name: 'ViewReports' });
-    },
-  
-      logout() {
-        // Add your logout logic here
-        this.$router.push({ name: 'Login' });
-      }
-    }
-  }
-  </script>
+  },
+};
+</script>
   
   <style scoped>
   .admin-dashboard {

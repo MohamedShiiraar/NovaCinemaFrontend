@@ -52,7 +52,7 @@
 
       if (response.status === 201) { 
         alert('Created movie successfully!');
-        this.$router.push('/movies'); // Redirect to login page
+        this.$router.push('/movies');
       } else {
         alert(`Creation failed: ${response.data.message || 'Unknown error'}`);
       }
@@ -67,7 +67,6 @@
   </script>
   
   <style scoped>
-  /* Add your styles here as you provided */
   .add-movie-page {
     max-width: 800px;
     margin: 2rem auto;

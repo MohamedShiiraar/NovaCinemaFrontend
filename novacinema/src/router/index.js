@@ -9,11 +9,9 @@ import PromotionInformation from '@/views/PromotionInformation.vue'
 import ListCinemaView from '@/views/ListCinemaView.vue'
 import AddMovie from '@/views/AddMovie.vue'
 import ReviewsView from '@/views/ReviewsView.vue'
-import AdminLogin from '@/views/AdminLoginView.vue' // Corrected to reference AdminLogin.vue in Views folder
-import AdminDashboard from '@/views/AdminDashboardView.vue' // Corrected to reference AdminDashboard.vue in Views folder
-import ManageMovies from '@/views/ManageMoviesView.vue' // Add this if you want routes for managing movies
-import ManageUsers from '@/views/ManageUserView.vue' // Add this if you want routes for managing users
-import ViewReports from '@/views/ViewReports.vue' // Add this if you want routes for viewing reports
+import AdminDashboard from '@/views/AdminDashboardView.vue' 
+import ManageMovies from '@/views/ManageMoviesView.vue' 
+import ManageUsers from '@/views/ManageUserView.vue' 
 import AdminPage from '@/views/AdminPage.vue'
 import LoginUserView from '@/views/LoginUserView.vue'
 
@@ -75,17 +73,11 @@ const routes = [
     component: ReviewsView
   },
   {
-    path: '/admin-login',
-    name: 'AdminLogin',
-    component: AdminLogin
-  },
-  {
     path: '/admin-dashboard',
     name: 'AdminDashboard',
     component: AdminDashboard
   },
   {
-
     path: '/manage-movies',
     name: 'ManageMovies',
     component: ManageMovies
@@ -96,14 +88,10 @@ const routes = [
     component: ManageUsers
   },
   {
-    path: '/view-reports',
-    name: 'ViewReports',
-    component: ViewReports
-  }
     path: '/admin',
     name: 'admin',
     component: AdminPage,
-},
+}
 
 ]
 
