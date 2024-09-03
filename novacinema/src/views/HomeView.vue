@@ -34,7 +34,7 @@
             <img :src="movie.posterUrl || 'https://via.placeholder.com/200x300?text=No+Image'" :alt="movie.title + ' Poster'">
             <div class="movie-info">
               <h3 style="text-align: center;" >{{ movie.name }}</h3>
-              <p style="font-weight: bold;" >Genre: {{ movie.genre }}</p>
+              <p style="font-weight: bold;" >Genre: {{ movie.genre.name }}</p>
               <p style="font-weight: bold;">Duration: {{ movie.duration }}</p>
             </div>
           </div>

@@ -52,7 +52,12 @@ export default {
         if (user) {
           alert('Login successful!');
           localStorage.setItem('loggedInUser', JSON.stringify(user));
-          this.$router.push('/myaccount');
+          console.log(localStorage.getItem('loggedInUser'))
+          if (user.admin) {
+              this.$router.push('/admin');
+          } else {
+              this.$router.push('/myaccount');
+          }
         } else {
           alert('Invalid email or password');
         }
