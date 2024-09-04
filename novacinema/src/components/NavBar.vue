@@ -2,10 +2,7 @@
     <nav>
       <ul>
         <li><a href="/">Home</a></li>
-        <li class="add-movie">
-          <a href="/movies">Movies</a>
-          <a href="/add-movie" class="add-movie-button" style="font-size: small;">Add a Movie</a>
-        </li>
+          <li><a href="/movies">Movies</a></li>
         <li><a href="/cinema">Cinema</a></li>
         <li><a href="/promotions">Promotions</a></li>
         <li class="dropdown">
@@ -18,7 +15,7 @@
             <button @click="logout" v-if="loggedInUser.name">Logout</button>
           </div>
         </li>
-        <li><a href="/admin-dashboard">Admin</a></li>
+        <li v-if="isAdmin"><a href="/admin-dashboard">Admin</a></li>
       </ul>
     </nav>
   </template>
@@ -29,6 +26,12 @@
       return {
         loggedInUser: JSON.parse(localStorage.getItem('loggedInUser')) || {}
       };
+    },
+    computed: {
+      isAdmin() {
+        return this.loggedInUser.admin === true || this.loggedInUser.admin === 'admin';
+      }
+
     },
     methods: {
       logout() {

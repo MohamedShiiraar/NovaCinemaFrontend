@@ -19,7 +19,7 @@ class MovieService {
   }
 
   // Update a movie
-  updateSeat(movie) {
+  updateMovie(movie) {
     return axios.post(`${MOVIE_API_BASE_URL}/update`, movie);
   }
 }
