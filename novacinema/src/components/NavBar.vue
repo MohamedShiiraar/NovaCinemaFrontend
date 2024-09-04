@@ -60,6 +60,9 @@
     nav {
       background-color: #333;
       padding: 0.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
     nav ul {
       list-style-type: none;
