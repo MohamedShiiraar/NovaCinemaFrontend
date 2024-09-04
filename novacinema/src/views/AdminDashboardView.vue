@@ -21,7 +21,7 @@
         <h2>Manage Cinemas</h2>
       </div>
       <div v-if="currentSection==='promotions'">
-        <h2>Manage Promotions</h2>
+        <manage-promotions />
       </div>
     </section>
   </div>
@@ -30,10 +30,12 @@
   <script>
   import ManageMoviesView from './ManageMoviesView.vue';
   import ManageUserView from './ManageUserView.vue';
+  import ManagePromotions from './ManagePromotions.vue';
   export default {
   components: {
     ManageMoviesView,
-    ManageUserView, 
+    ManageUserView,
+    ManagePromotions,
   },
     ManageUserView,
   data() {

@@ -20,7 +20,11 @@ class PromotionService {
 
   // Update a promotion
   updatePromotion(promotion) {
-    return axios.post(`${PROMOTION_API_BASE_URL}/update`, promotion);
+    return axios.post(`${PROMOTION_API_BASE_URL}/update`, promotion, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
   }
 }
 
