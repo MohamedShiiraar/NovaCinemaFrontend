@@ -12,8 +12,8 @@ import ReviewsView from '@/views/ReviewsView.vue'
 import AdminDashboard from '@/views/AdminDashboardView.vue' 
 import ManageMovies from '@/views/ManageMoviesView.vue' 
 import ManageUsers from '@/views/ManageUserView.vue' 
-import AdminPage from '@/views/AdminPage.vue'
 import LoginUserView from '@/views/LoginUserView.vue'
+import AdminDashboardView from '@/views/AdminDashboardView.vue'
 
 
 const routes = [
@@ -90,7 +90,7 @@ const routes = [
   {
     path: '/admin',
     name: 'admin',
-    component: AdminPage,
+    component: AdminDashboardView,
 }
 
 ]

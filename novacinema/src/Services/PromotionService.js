@@ -26,6 +26,10 @@ class PromotionService {
       },
     });
   }
+
+  deletePromotion(promotionID) {
+    return axios.delete(`${PROMOTION_API_BASE_URL}/delete/${promotionID}`);
+  }
 }
 
 export default new PromotionService();
