@@ -22,7 +22,7 @@
             <td>
             
               <button @click="editCinema(cinema)">Edit</button>
-              <button @click="deleteCinema(cinema.locationID)">Delete</button>
+              <!-- <button @click="deleteCinema(cinema.locationID)">Delete</button> -->
             </td>
           </tr>
         </tbody>

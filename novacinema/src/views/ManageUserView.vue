@@ -21,7 +21,7 @@
             <td >{{ user.isAdmin ? 'Y' : 'N' }}</td>
             <td>
               <button @click="editUser(user.userID)">Edit</button>
-              <button @click="deleteUser(user.userID)">Delete</button>
+              <!-- <button @click="deleteUser(user.userID)">Delete</button> -->
               <button @click="toggleAdminStatus(user.userID)" v-if="!user.isAdmin">Make Admin</button>
             </td>
           </tr>
