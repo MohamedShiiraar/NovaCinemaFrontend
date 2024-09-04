@@ -20,11 +20,11 @@ export default {
   data() {
     return {
       cinemas: [
-        { id: 1, name: "Backdrop Cinema", location: "123 Main St, Cityville", image: "https://via.placeholder.com/300x200?text=Backdrop+Cinema", reviews: 2 },
-        { id: 2, name: "FrontRow Cinema", location: "456 Elm St, Cityville", image: "https://via.placeholder.com/300x200?text=FrontRow+Cinema", reviews: 2 },
-        { id: 3, name: "Steveson Rd Cinema", location: "789 Oak St, Townsville", image: "https://via.placeholder.com/300x200?text=Steveson+Cinema", reviews: 2 },
-        { id: 4, name: "Cont Cinema", location: "101 Pine St, Metropolis", image: "https://via.placeholder.com/300x200?text=Cont+Cinema", reviews: 2 },
-        { id: 5, name: "Cinemito Cinema", location: "202 Maple St, Rivercity", reviews: 2 }
+       { id: 1, name: "Backdrop Cinema", location: "123 Main St, Cityville", image: "https://via.placeholder.com/300x200?text=Backdrop+Cinema", reviews: 2 },
+       // { id: 2, name: "FrontRow Cinema", location: "456 Elm St, Cityville", image: "https://via.placeholder.com/300x200?text=FrontRow+Cinema", reviews: 2 },
+      //  { id: 3, name: "Steveson Rd Cinema", location: "789 Oak St, Townsville", image: "https://via.placeholder.com/300x200?text=Steveson+Cinema", reviews: 2 },
+      //  { id: 4, name: "Cont Cinema", location: "101 Pine St, Metropolis", image: "https://via.placeholder.com/300x200?text=Cont+Cinema", reviews: 2 },
+      //  { id: 5, name: "Cinemito Cinema", location: "202 Maple St, Rivercity", reviews: 2 }
       ]
     };
   },

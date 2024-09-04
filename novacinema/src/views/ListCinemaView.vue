@@ -6,23 +6,12 @@
     
     <main>
       <section class="cinema-section">
-        <div v-for="cinema in cinemas" :key="cinema.id" class="cinema-card-wrapper">
+        <div v-for="cinema in cinemaData" :key="cinema.locationID" class="cinema-card-wrapper">
           <div class="cinema-card">
-            <router-link :to="{ name: 'movies', query: { cinemaId: cinema.id } }" class="cinema-card-link">
-              <img :src="cinema.image" :alt="cinema.name" class="cinema-image">
+            <router-link :to="{ name: 'movies', query: { cinemaId: cinema.locationID } }" class="cinema-card-link">
+              <img :src="defaultImage" :alt="cinema.name" class="cinema-image">
               <h3>{{ cinema.name }}</h3>
-              <p>{{ cinema.location }}</p>
-              <div class="cinema-reviews">
-                <span class="star-rating">★★★★☆</span>
-                <span class="review-count">({{ cinema.reviews }} reviews)</span>
-              </div>
-            </router-link>
-            <router-link 
-              :to="{ name: 'reviews', query: { cinemaId: cinema.id } }" 
-              class="review-link"
-              @click.stop
-            >
-              View/Leave Reviews
+              <p>{{ cinema.address }}</p>
             </router-link>
           </div>
         </div>
@@ -30,11 +19,36 @@
     </main>
   </div>
 </template>
+
 <script>
+import CinemaService from "@/Services/CinemaService"; 
+import defaultCinemaImage from "@/assets/cinemaImage.jpg";
+
 export default {
-  props: ['cinemas']
+  data() {
+    return {
+      cinemaData: [],
+      defaultImage: defaultCinemaImage, 
+    };
+  },
+  methods: {
+    fetchCinemas() {
+      CinemaService.getAllCinemas()
+        .then(response => {
+          this.cinemaData = response.data;
+          console.log("Cinemas fetched:", this.cinemaData); 
+        })
+        .catch(error => {
+          console.error("Error fetching cinemas:", error);
+        });
+    },
+  },
+  created() {
+    this.fetchCinemas(); 
+  },
 };
 </script>
+
 <style scoped>
 body {
   font-family: 'Roboto', sans-serif;
