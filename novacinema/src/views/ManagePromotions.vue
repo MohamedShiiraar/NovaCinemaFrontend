@@ -26,7 +26,7 @@
             <td>{{ new Date(promotion.validUntil).toLocaleString() }}</td>
             <td>
               <button @click="editPromotion(promotion)">Edit</button>
-              <button @click="deletePromotion(promotion.promotionID)">Delete</button>
+              <button @click="deletePromotion(promotion)">Delete</button>
             </td>
           </tr>
         </tbody>
@@ -140,15 +140,15 @@
             console.error("There was an error updating the promotion:", error);
           });
       },
-      deletePromotion(id) {
-        PromotionService.deletePromotion(id)
-          .then(() => {
+      deletePromotion(promotion) {
+        PromotionService.deletePromotion(promotion.promotionID)
+            .then(() => {
             this.fetchPromotions();
-          })
-          .catch((error) => {
+            })
+            .catch((error) => {
             console.error("There was an error deleting the promotion:", error);
-          });
-      },
+            });
+        },
     },
     mounted() {
       this.fetchPromotions(); 
