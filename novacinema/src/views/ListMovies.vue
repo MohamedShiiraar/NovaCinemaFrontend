@@ -24,7 +24,7 @@
       </div>
       <div class="movie-grid">
         <div v-for="movie in filteredMovies" :key="movie.id" class="movie-card">
-          <img :src="movie.posterUrl || 'https://via.placeholder.com/200x300?text=No+Image'" :alt="movie.title + ' Poster'">
+          <img :src="defaultImage" :alt="movie.name" class="movie-image">
           <div class="movie-info">
             <h3 style="text-align: center;" >{{ movie.name }}</h3>
             <p style="font-weight: bold;">Genre: {{ movie.genre.name }}</p>
@@ -40,6 +40,7 @@
 
 <script>
 import MovieService from "@/Services/MovieService";
+import defaultMovieImage from "@/assets/movieImage.jpg";
 
 export default {
   data() {
@@ -48,6 +49,7 @@ export default {
       selectedGenre: '',
       selectedRating: '',
       searchTerm: '',
+      defaultImage: defaultMovieImage,
     };
   },
   computed: {
