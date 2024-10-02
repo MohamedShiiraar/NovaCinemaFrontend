@@ -8,7 +8,7 @@
       <section class="cinema-section">
         <div v-for="cinema in cinemaData" :key="cinema.locationID" class="cinema-card-wrapper">
           <div class="cinema-card">
-            <router-link :to="{ name: 'movies', query: { cinemaId: cinema.locationID } }" class="cinema-card-link">
+            <router-link :to="{ name: 'movies', query: { cinemaId: cinema.locationID, cinemaName: cinema.name } }" class="cinema-card-link">
               <img :src="defaultImage" :alt="cinema.name" class="cinema-image">
               <h3>{{ cinema.name }}</h3>
               <p>{{ cinema.address }}</p>

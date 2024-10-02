@@ -1,7 +1,7 @@
 <template>
   <div class="movies">
     <main>
-      <h2>Now Showing</h2>
+      <h2 v-if = "cinemaName">"Now Showing at {{ cinemaName }}</h2>
       <div class="filters">
         <div class="filter-group">
           <select v-model="selectedGenre" @change="filterMovies">
@@ -50,6 +50,7 @@ export default {
       selectedRating: '',
       searchTerm: '',
       defaultImage: defaultMovieImage,
+      cinemaName: '',
     };
   },
   computed: {
@@ -93,6 +94,8 @@ export default {
   },
   created() {
     this.fetchMovies();
+
+    this.cinemaName = this.$route.query.cinemaName || '';
   }
 };
 </script>
