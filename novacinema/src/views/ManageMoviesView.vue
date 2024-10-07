@@ -27,7 +27,7 @@
           <td>{{ movie.ageRestriction }}</td>
           <td>
             <button @click="showEditMovieDialog(movie)">Edit</button>
-            <button @click="deleteMovie(movie.movieID)">Delete</button>
+            <!-- <button @click="deleteMovie(movie.movieID)">Delete</button> -->
           </td>
         </tr>
       </tbody>

@@ -26,7 +26,7 @@
             <td>{{ new Date(promotion.validUntil).toLocaleString() }}</td>
             <td>
               <button @click="editPromotion(promotion)">Edit</button>
-              <button @click="deletePromotion(promotion)">Delete</button>
+              <!-- <button @click="deletePromotion(promotion)">Delete</button> -->
             </td>
           </tr>
         </tbody>
