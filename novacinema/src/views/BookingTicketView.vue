@@ -68,6 +68,8 @@
 </template>
 
 <script>
+import TicketService from '@/Services/TicketService';
+
 export default {
   data() {
     return {
@@ -129,6 +131,10 @@ export default {
         Seats: ${this.selectedSeats.join(', ')}
         Total: R${this.totalPrice.toFixed(2)}
       `;
+
+      this.$emit('bookingConfirmed', bookingDetails);
+
+    
       alert(`Booking confirmed!\n\n${bookingDetails}\n\nEnjoy your movie!`);
 
       this.$router.push({
@@ -142,6 +148,27 @@ export default {
       });
     }
    },
+   addTicket(bookingDetails) {
+      console.log("Adding ticket with details:", bookingDetails);
+
+      TicketService.createTicket(bookingDetails)
+        .then(() => {
+          alert('Booking confirmed!');
+          this.$router.push({
+            path: '/confirmation',
+            query: {
+              date: bookingDetails.date,
+              time: bookingDetails.time,
+              seats: bookingDetails.seats.join(', '),
+              price: bookingDetails.totalPrice,
+            },
+          });
+        })
+        .catch((error) => {
+          console.error("There was an error adding the ticket:", error);
+          alert('There was an error confirming your booking. Please try again.');
+        });
+    },
   },
 };
 </script>
