@@ -1,4 +1,4 @@
-<template>
+ <template>
   <header>
     <router-link to="/">
       <h1><span>Nova </span>Cinema</h1>
