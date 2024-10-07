@@ -7,7 +7,7 @@
       <div class="movie-details">
         <h3 style="text-align: center;font-weight: bold;">{{ movie.title }}</h3>
         <p style="text-align: center;font-weight: bold;"> {{ movie.duration }} | {{ movie.ageRestriction }}</p>
-        <p style="text-align: center;font-weight: bold;text-transform: capitalize;">{{ movie.genre }}</p>
+        <p style="text-align: center;font-weight: bold;text-transform: capitalize;">{{ movie.genre.name }}</p>
         <p style="text-align: center;">{{ movie.movieDescription }}</p>
 
       </div>
@@ -76,7 +76,7 @@ export default {
       movie: {
         title: this.$route.query.title || 'Unknown Title',
         poster: this.$route.query.poster || 'https://via.placeholder.com/200x300?text=No+Image',
-        genre: this.$route.query.genre || 'Unknown Genre',
+        genre: this.$route.query.genre.name || 'Unknown Genre',
         duration: this.$route.query.duration || 'Unknown Duration',
         ageRestriction: this.$route.query.ageRestriction || 'Unrated',
         movieDescription: this.$route.query.movieDescription || 'Unknown Director',

@@ -34,13 +34,6 @@
           <a @click="openBookingView(movie)" class="book-button">Book Now</a>
         </div>
       </div>
-      <div class="pagination">
-        <button disabled>Previous</button>
-        <button>1</button>
-        <button>2</button>
-        <button>3</button>
-        <button>Next</button>
-      </div>
     </main>
   </div>
 </template>
@@ -74,7 +67,7 @@ export default {
       query: {
         title: movie.name,
         poster: movie.posterUrl,
-        genre: movie.genre,
+        genre: movie.genre.name,
         duration: movie.duration,
         ageRestriction: movie.ageRestriction,
         movieDescription: movie.movieDescription,
