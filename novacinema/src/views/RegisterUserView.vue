@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import UserService from '@/Services/UserService'; // Import the UserService
+import UserService from '@/Services/UserService'; 
 
 export default {
   name: 'RegisterUser',
@@ -63,7 +63,7 @@ export default {
 
       if (response.status === 201) { 
         alert('Registration successful!');
-        this.$router.push('/login'); // Redirect to login page
+        this.$router.push('/login'); 
       } else {
         alert(`Registration failed: ${response.data.message || 'Unknown error'}`);
       }

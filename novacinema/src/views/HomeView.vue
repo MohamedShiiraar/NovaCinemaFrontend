@@ -10,19 +10,18 @@
     </section>
     
     <section class="featured-section">
-      <h2> Now Showing </h2>
-      <div class="movie-carousel">
-        <div v-for="movie in movies" :key="movie.id" class="movie-card">
-          <img :src="defaultImage" :alt="movie.name" class="movie-image">
+        <h2> Now Showing </h2>
+        <div class="movie-carousel">
+          <div v-for="movie in movies" :key="movie.id" class="movie-card">
+            <img :src="'http://localhost:8080' + movie.imageURL" alt="Movie Image">
             <div class="movie-info">
-              <h3 style="text-align: center;" >{{ movie.name }}</h3>
-              <p style="font-weight: bold;" >Genre: {{ movie.genre.name }}</p>
-              <p style="font-weight: bold;">Duration: {{ movie.duration }}</p>
+              <h3 style="text-align: center;">{{ movie.name || 'Unknown Movie' }}</h3>
+              <p style="font-weight: bold;" v-if="movie.genre">{{ movie.genre.name }}</p>
+              <p style="font-weight: bold;">Duration: {{ movie.duration || 'Unknown' }}</p>
             </div>
           </div>
-        
-      </div>
-    </section>
+        </div>
+      </section>
     
     <section class="featured-section">
       <h2>Special Promotions</h2>
@@ -35,29 +34,10 @@
             <router-link :to="{ name: 'Promotions', query: { section: '{{ promotion.promotionName }}' } }" class="promo-button">Learn More</router-link>
           </div>
         </div>
-        <!-- <div class="promo-card">
-          <img src="https://via.placeholder.com/300x150?text=Family+Package" alt="Family Package Promotion">
-          <div class="promo-info">
-            <h3>Family Package</h3>
-            <p>Save big with our family package for groups of 4 or more</p>
-            <router-link :to="{ name: 'Promotions', query: { section: 'family' } }" class="promo-button">Learn More</router-link>
-          </div>
-        </div>
-        <div class="promo-card">
-          <img src="https://via.placeholder.com/300x150?text=Senior+Citizen+Offer" alt="Senior Citizen Offer">
-          <div class="promo-info">
-            <h3>Senior Citizen Offer</h3>
-            <p>Enjoy special discounts for our senior moviegoers</p>
-            <router-link :to="{ name: 'Promotions', query: { section: 'senior' } }" class="promo-button">Learn More</router-link>
-          </div>
-        </div> -->
       </div>
     </section>
   </main>
   </div>
-  
-  
-  
   
 </template>
 
@@ -73,6 +53,10 @@ export default {
       movies: [], 
       loggedInUser: JSON.parse(localStorage.getItem('loggedInUser')) || {},
       defaultImage: defaultMovieImage,
+      loadingMovies: false,
+      loadingPromotions: false,
+      errorMovies: null,
+      errorPromotions: null,
     };
   },
   created() {
@@ -90,16 +74,21 @@ export default {
           this.loading = false;
         }
       },
-    async fetchMovies() {
-      MovieService.getAllMovies()
-      .then(response => {
-        this.movies = response.data;
-        console.log('Movies fetched:', this.movies); // Debug log
-      })
-      .catch(error => {
-        console.error("Error fetching movies:", error);
+      async fetchMovies() {
+  try {
+    const response = await MovieService.getAllMovies();
+    if (response.data && Array.isArray(response.data)) {
+      this.movies = response.data.map(movie => {
+        return {
+          ...movie,
+          imageURL: movie.imageURL ? movie.imageURL : '/images/default-movie.jpg' 
+        };
       });
-    },
+    }
+  } catch (error) {
+    console.error("Error fetching movies:", error);
+  }
+},
     logout() {
     localStorage.removeItem('loggedInUser');
       this.loggedInUser = {};
