@@ -1,8 +1,8 @@
 <template>
   <div class="booking-container">
     <div class="movie-info">
-      <div class="movie-poster">
-        <img :src="movie.poster" alt="A dramatic movie poster for Galactic Uprising" />
+      <div class="imageURL">
+        <img :src="'http://localhost:8080' + movie.imageURL" alt="Movie Image" v-if="movie.imageURL" style="width: 300px; height: 300px; border: 3px solid #000; border-radius: 15px;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);">
       </div>
       <div class="movie-details">
         <h3 style="text-align: center;font-weight: bold;">{{ movie.title }}</h3>
@@ -75,12 +75,11 @@ export default {
     return {
       movie: {
         title: this.$route.query.title || 'Unknown Title',
-        poster: this.$route.query.poster || 'https://via.placeholder.com/200x300?text=No+Image',
+        imageURL: this.$route.query.imageURL || 'https://via.placeholder.com/200x300?text=No+Image',
         genre: this.$route.query.genre.name || 'Unknown Genre',
         duration: this.$route.query.duration || 'Unknown Duration',
         ageRestriction: this.$route.query.ageRestriction || 'Unrated',
-        movieDescription: this.$route.query.movieDescription || 'Unknown Director',
-        stars: this.$route.query.stars || 'Unknown Stars'
+        movieDescription: this.$route.query.movieDescription,
       },
       availableDates: ['Tue, May 9', 'Wed, May 10', 'Thu, May 11', 'Fri, May 12', 'Sat, May 13'],
       availableTimes: ['10:00 AM', '1:30 PM', '4:45 PM', '8:00 PM', '10:30 PM'],

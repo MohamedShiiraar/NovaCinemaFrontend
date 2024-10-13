@@ -24,7 +24,7 @@
       </div>
       <div class="movie-grid">
         <div v-for="movie in filteredMovies" :key="movie.id" class="movie-card">
-          <img :src="defaultImage" :alt="movie.name" class="movie-image">
+          <img :src="'http://localhost:8080' + movie.imageURL" alt="Movie Image">
           <div class="movie-info">
             <h3 style="text-align: center;" >{{ movie.name }}</h3>
             <p style="font-weight: bold;">Genre: {{ movie.genre.name }}</p>
@@ -69,7 +69,7 @@ export default {
       path: '/booking',
       query: {
         title: movie.name,
-        poster: movie.posterUrl,
+        imageURL: movie.imageURL,
         genre: movie.genre.name,
         duration: movie.duration,
         ageRestriction: movie.ageRestriction,
@@ -157,7 +157,7 @@ nav {
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s ease, transform 0.3s ease;
-  height: 100%; /* Ensures the card takes full height in grid */
+  height: 100%; 
 }
 .movie-card:hover {
   transform: translateY(-5px);
@@ -171,7 +171,7 @@ nav {
 }
 .movie-info {
   padding: 1rem;
-  flex: 1; /* Allows info section to grow and push the button down */
+  flex: 1; 
 }
   .movie-info h3 {
     margin: 0 0 0.5rem 0;
@@ -202,7 +202,7 @@ nav {
   border-radius: 4px;
   font-weight: bold;
   transition: background-color 0.3s ease;
-  margin-top: auto; /* Pushes button to the bottom */
+  margin-top: auto; 
 }
 .book-button:hover {
   background-color: #ff0a16;

@@ -9,6 +9,7 @@
           <tr>
             <th>ID</th>
             <th>Title</th>
+            <th>Movie Image</th>
             <th>Movie Description</th>
             <th>Genre</th>
             <th>Duration</th>
@@ -21,13 +22,16 @@
         <tr v-for="movie in movies" :key="movie.movieID">
           <td>{{ movie.movieID }}</td>
           <td>{{ movie.name }}</td>
+          <td>
+            <img v-if="movie.imageURL" :src="'http://localhost:8080' + movie.imageURL" alt="Movie Image" width="100" height="100"/>
+            <span v-else>No Image</span>
+          </td>
           <td>{{ movie.movieDescription }}</td>
           <td>{{ movie.genre.name }}</td>
           <td>{{ movie.duration }}</td>
           <td>{{ movie.ageRestriction }}</td>
           <td>
             <button @click="showEditMovieDialog(movie)">Edit</button>
-            <!-- <button @click="deleteMovie(movie.movieID)">Delete</button> -->
           </td>
         </tr>
       </tbody>
@@ -52,6 +56,9 @@
 
         <label for="ageRestriction">Age Restriction:</label>
         <input type="text" v-model="newMovie.ageRestriction" id="ageRestriction" required>
+
+        <label for="movieImage">Movie Image:</label>
+        <input type="file" @change="handleFileUpload" id="movieImage" />
 
         <button type="submit">Add</button>
         <button @click="closeAddDialog">Cancel</button>
@@ -78,6 +85,9 @@
         <label for="edit-ageRestriction">Age Restriction:</label>
         <input type="text" v-model="editedMovie.ageRestriction" id="edit-ageRestriction" required>
 
+        <label for="edit-movieImage">Movie Image:</label>
+        <input type="file" @change="handleFileUpload" id="edit-movieImage" />
+
         <button type="submit">Update</button>
         <button @click="closeEditDialog">Cancel</button>
       </form>
@@ -103,21 +113,31 @@ import MovieService from '@/Services/MovieService';
         genre: null,
         duration: "",
         ageRestriction: "",
+        imageURL: null,
         },
         editedMovie: null,
         loggedInUser: {}
       }
     },
     methods: {
-    fetchMovies() {
-      MovieService.getAllMovies()
-        .then((response) => {
-          this.movies = response.data;
-        })
-        .catch((error) => {
-          console.error("There was an error fetching the movies:", error);
-        });
-    },
+      handleFileUpload(event) {
+    const file = event.target.files[0];
+    if (file) {
+      if (this.isAddDialogOpen) {
+        this.newMovie.image = file;
+      } else if (this.isEditDialogOpen) {
+        this.editedMovie.image = file;
+      }
+    }
+  },
+  async fetchMovies() {
+    try {
+      const response = await MovieService.getAllMovies();
+      this.movies = response.data.filter(movie => movie && movie.name && movie.genre && movie.genre.name && movie.duration);
+    } catch (error) {
+      console.error("Error fetching movies:", error);
+    }
+  },
     fetchGenres() {
       GenreService.getAllGenres()
         .then((response) => {
@@ -134,15 +154,30 @@ import MovieService from '@/Services/MovieService';
       this.isAddDialogOpen = false;
     },
     addMovie() {
-      MovieService.createMovie(this.newMovie)
-        .then(() => {
-          this.fetchMovies();
-          this.closeAddDialog();
-        })
-        .catch((error) => {
-          console.error("There was an error adding the movie:", error);
-        });
-    },
+      if (!this.newMovie.genre) {
+    console.error("Genre is not selected");
+    return;  
+  }
+  const formData = new FormData();
+  formData.append("movieData", JSON.stringify({
+    name: this.newMovie.name,
+    movieDescription: this.newMovie.movieDescription,
+    genre: this.newMovie.genre, 
+    duration: this.newMovie.duration,
+    ageRestriction: this.newMovie.ageRestriction,
+  }));
+  formData.append("image", this.newMovie.image); 
+
+  MovieService.createMovie(formData)
+    .then(() => {
+      this.fetchMovies();
+      this.closeAddDialog();
+      console.log("New Movie Data:", this.newMovie);
+    })
+    .catch((error) => {
+      console.error("There was an error adding the movie:", error);
+    });
+},
     showEditMovieDialog(movie) {
       this.editedMovie = { ...movie }; 
       this.isEditDialogOpen = true;
@@ -151,15 +186,27 @@ import MovieService from '@/Services/MovieService';
       this.isEditDialogOpen = false;
     },
     updateMovie() {
-      MovieService.updateMovie(this.editedMovie)
-        .then(() => {
-          this.fetchMovies();
-          this.closeEditDialog();
-        })
-        .catch((error) => {
-          console.error("There was an error updating the movie:", error);
-        });
-    },
+  const formData = new FormData();
+  formData.append("movieData", JSON.stringify({
+    name: this.editedMovie.name,
+    movieDescription: this.editedMovie.movieDescription,
+    genre: this.editedMovie.genre.id, 
+    duration: this.editedMovie.duration,
+    ageRestriction: this.editedMovie.ageRestriction,
+  }));
+  if (this.editedMovie.image) {
+    formData.append("image", this.editedMovie.image); 
+  }
+
+  MovieService.updateMovie(this.editedMovie.movieID, formData)
+    .then(() => {
+      this.fetchMovies();
+      this.closeEditDialog();
+    })
+    .catch((error) => {
+      console.error("There was an error updating the movie:", error);
+    });
+},
     deleteMovie(id) {
       MovieService.deleteMovie(id)
         .then(() => {
