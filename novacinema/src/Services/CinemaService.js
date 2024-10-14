@@ -10,7 +10,7 @@ class CinemaService {
 
   // Fetch a single cinema by ID
   getCinemaById(id) {
-    return axios.get(`${CINEMA_API_BASE_URL}/read${id}`);
+    return axios.get(`${CINEMA_API_BASE_URL}/read/${id}`);
   }
 
   // Create a new cinema

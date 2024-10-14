@@ -68,9 +68,10 @@ export default {
     this.$router.push({
       path: '/booking',
       query: {
+        movieID: movie.movieID,
         title: movie.name,
         imageURL: movie.imageURL,
-        genre: movie.genre.name,
+        genre: JSON.stringify(movie.genre),  // Serialize the genre object/array
         duration: movie.duration,
         ageRestriction: movie.ageRestriction,
         movieDescription: movie.movieDescription,

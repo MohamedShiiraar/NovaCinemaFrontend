@@ -68,16 +68,30 @@
 </template>
 
 <script>
+import TicketService from '@/Services/TicketService';
+import CinemaService from "@/Services/CinemaService"; 
+
+async function fetchCinemaDetails(cinemaId) {
+    try {
+        // Use CinemaService to fetch the cinema by ID
+        const response = await CinemaService.getCinemaById(cinemaId);
+        return response.data; // Return the cinema details from the response
+    } catch (error) {
+        console.error('Error fetching cinema details:', error);
+        return null; // Handle error appropriately
+    }
+}
+
 export default {
   data() {
     return {
       movie: {
         title: this.$route.query.title || 'Unknown Title',
         imageURL: this.$route.query.imageURL || 'https://via.placeholder.com/200x300?text=No+Image',
-        genre: this.$route.query.genre.name || 'Unknown Genre',
+        genre: this.$route.query.genre ? JSON.parse(this.$route.query.genre) : ['Unknown Genre'], 
         duration: this.$route.query.duration || 'Unknown Duration',
         ageRestriction: this.$route.query.ageRestriction || 'Unrated',
-        movieDescription: this.$route.query.movieDescription,
+        movieDescription: this.$route.query.movieDescription || 'No Description Available', // Added default description
       },
       availableDates: ['Tue, May 9', 'Wed, May 10', 'Thu, May 11', 'Fri, May 12', 'Sat, May 13'],
       availableTimes: ['10:00 AM', '1:30 PM', '4:45 PM', '8:00 PM', '10:30 PM'],
@@ -91,16 +105,17 @@ export default {
       return this.seats.filter(seat => seat.selected).map(seat => seat.label);
     },
     totalPrice() {
-      return this.selectedSeats.length * 120.; 
+      return this.selectedSeats.length * 120; // Adjust price as needed
     },
   },
+  
   methods: {
     generateSeats() {
       const seats = [];
       for (let i = 0; i < 100; i++) {
         seats.push({
           label: String.fromCharCode(65 + Math.floor(i / 10)) + (i % 10 + 1),
-          occupied: Math.random() < 0.2, 
+          occupied: Math.random() < 0.2, // 20% chance of being occupied
           selected: false,
         });
       }
@@ -108,42 +123,77 @@ export default {
     },
     selectDate(date) {
       this.selectedDate = date;
-      this.selectedTime = null; 
+      this.selectedTime = null; // Reset time when date is selected
     },
     selectTime(time) {
       this.selectedTime = time;
     },
     selectSeat(seat) {
       if (!seat.occupied) {
-        seat.selected = !seat.selected;
+        seat.selected = !seat.selected; // Toggle seat selection
       }
     },
-    confirmBooking() {
-    if (!this.selectedDate || !this.selectedTime || !this.selectedSeats.length) {
-      alert('Please select a date, time, and at least one seat before confirming your booking.');
-    } else {
-      const bookingDetails = `
-        Date: ${this.selectedDate}
-        Time: ${this.selectedTime}
-        Seats: ${this.selectedSeats.join(', ')}
-        Total: R${this.totalPrice.toFixed(2)}
-      `;
-      alert(`Booking confirmed!\n\n${bookingDetails}\n\nEnjoy your movie!`);
+    async confirmBooking() {
+      // Check for required selections
+      if (!this.selectedDate || !this.selectedTime || !this.selectedSeats.length) {
+        alert('Please select a date, time, and at least one seat before confirming your booking.');
+        return;
+      }
 
-      this.$router.push({
-        path: '/confirmation',
-        query: {
-          date: this.selectedDate,
-          time: this.selectedTime,
-          seats: this.selectedSeats.join(', '),
-          price: this.totalPrice.toFixed(2),
+      const user = JSON.parse(localStorage.getItem('loggedInUser'));
+
+      if (!user) {
+        alert('User is not logged in. Please log in to proceed with booking.');
+        return;
+      }
+
+      const selectedCinemaId = 1; // Replace with the actual selected cinema ID
+      const cinema = await fetchCinemaDetails(selectedCinemaId);
+      if (!cinema) {
+          console.error('Cinema not found');
+          return; // Handle the case when the cinema is not found
+      }
+
+      // Prepare booking details
+      const bookingDetails = {
+        movie: this.movie,
+        showtime: this.selectedTime,
+        seat: this.selectedSeats.join(', '),
+        theatre: 'Theatre 1', // Change as needed
+        cinema: cinema,
+        ticketPrice: this.totalPrice,
+        userID: { 
+          id: user.userID, 
+          name: user.name, 
+          email: user.emailAddress 
         },
-      });
-    }
-   },
+      };
+
+      console.log(bookingDetails); // For debugging
+      // Send booking details to the backend
+      TicketService.createTicket(bookingDetails)
+        .then(() => {
+          alert(`Booking confirmed!\n\nDate: ${this.selectedDate}\nTime: ${this.selectedTime}\nSeats: ${this.selectedSeats.join(', ')}\nTotal: R${this.totalPrice.toFixed(2)}`);
+          // Redirect to confirmation page with booking details
+          this.$router.push({
+            path: '/confirmation',
+            query: {
+              date: this.selectedDate,
+              time: this.selectedTime,
+              seats: this.selectedSeats.join(', '),
+              price: this.totalPrice.toFixed(2),
+            },
+          });
+        })
+        .catch((error) => {
+          console.error('There was an error adding the ticket:', error);
+          alert('There was an error confirming your booking. Please try again.');
+        });
+    },
   },
 };
 </script>
+
 
 <style scoped>
 body {
