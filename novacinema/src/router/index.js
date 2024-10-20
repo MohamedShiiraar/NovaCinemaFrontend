@@ -8,9 +8,8 @@ import ConfirmationView from '@/views/ConfirmationView.vue'
 import PromotionInformation from '@/views/PromotionInformation.vue'
 import ListCinemaView from '@/views/ListCinemaView.vue'
 import AddMovie from '@/views/AddMovie.vue'
-import ReviewsView from '@/views/ReviewsView.vue'
+import MovieReviews from '@/views/MovieReviews.vue'
 import AdminDashboard from '@/views/AdminDashboardView.vue' 
-import ManageMovies from '@/views/ManageMoviesView.vue' 
 import ManageUsers from '@/views/ManageUserView.vue' 
 import LoginUserView from '@/views/LoginUserView.vue'
 import AdminDashboardView from '@/views/AdminDashboardView.vue'
@@ -68,19 +67,14 @@ const routes = [
     component: AddMovie
   },
   {
-    path: '/reviews',
-    name: 'reviews',
-    component: ReviewsView
+    path: '/movie-reviews',
+    name: 'movie-reviews',
+    component: MovieReviews,
   },
   {
     path: '/admin-dashboard',
     name: 'AdminDashboard',
     component: AdminDashboard
-  },
-  {
-    path: '/manage-movies',
-    name: 'ManageMovies',
-    component: ManageMovies
   },
   {
     path: '/manage-users',

@@ -1,11 +1,11 @@
 import axios from "axios";
 
-const REVIEWS_API_BASE_URL = "http://localhost:8080/reviews";
+const REVIEWS_API_BASE_URL = "http://localhost:8080/review";
 
 class ReviewsService {
-  // Fetch all reviews for a specific cinema
-  getAllReviews(cinemaId) {
-    return axios.get(`${REVIEWS_API_BASE_URL}/getAll/${cinemaId}`);
+  // Fetch all reviews
+  getAllReviews() {
+    return axios.get(`${REVIEWS_API_BASE_URL}/getAll`);
   }
 
   // Fetch a single review by ID
