@@ -24,19 +24,22 @@
       </div>
       <div class="movie-grid">
         <div v-for="movie in filteredMovies" :key="movie.id" class="movie-card">
+          <h3>{{ movie.title }}</h3>
           <img :src="'http://localhost:8080' + movie.imageURL" alt="Movie Image">
           <div class="movie-info">
             <h3 style="text-align: center;" >{{ movie.name }}</h3>
             <p style="font-weight: bold;">Genre: {{ movie.genre.name }}</p>
             <p style="font-weight: bold;">Duration: {{ movie.duration }}</p>
             <p style="font-weight: bold;">Age Restriction: {{ movie.ageRestriction }}</p>
-          </div>
+            <span @click="openMovieReview(movie)" class="reviews-link" style="text-align: center; cursor: pointer;">
+            Ratings and Reviews
+            </span></div>
           <a @click="openBookingView(movie)" class="book-button">Book Now</a>
         </div>
       </div>
     </main>
   </div>
-</template>
+</template>  
 
 <script>
 import MovieService from "@/Services/MovieService";
@@ -79,6 +82,17 @@ export default {
       }
     });
   },
+
+    openMovieReview(movie) {
+      this.$router.push({
+        path: '/movie-reviews',
+        query: {
+          movieID: movie.movieID,
+          title: movie.name,
+        }
+      });
+    },
+
     fetchMovies() {
     MovieService.getAllMovies()
       .then(response => {
@@ -254,5 +268,18 @@ nav {
 .dropdown:hover .dropdown-content {
     display: block;
 }
+
+.reviews-link {
+  display: block;
+  margin-bottom: 10px;
+  color: #007bff;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.reviews-link:hover {
+  color: #0056b3;
+}
+
 
 </style>
