@@ -10,7 +10,7 @@ class UserService {
 
   // Fetch a single user by ID
   getUserById(id) {
-    return axios.get(`${USER_API_BASE_URL}/read${id}`);
+    return axios.get(`${USER_API_BASE_URL}/read/${id}`);
   }
 
   // Create a new user

@@ -13,6 +13,11 @@ class ReviewsService {
     return axios.get(`${REVIEWS_API_BASE_URL}/read/${id}`);
   }
 
+  // Fetch all reviews by Movie ID
+  getReviewsByMovieId(movieId) {
+    return axios.get(`${REVIEWS_API_BASE_URL}/movie/${movieId}`);
+  }
+
   // Create a new review
   createReview(review) {
     return axios.post(`${REVIEWS_API_BASE_URL}/create`, review);
