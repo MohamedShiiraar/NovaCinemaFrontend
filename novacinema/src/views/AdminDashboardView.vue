@@ -49,6 +49,7 @@
   data() {
     return {
       currentSection: null, 
+      loggedInUser: null // JSON.parse(localStorage.getItem('loggedInUser')) || {}
     };
   },
   methods: {
@@ -56,9 +57,21 @@
       this.currentSection = section;
     },
     logout() {
-      this.$router.push({ name: 'Login' });
+      localStorage.removeItem('loggedInUser');
+        // this.loggedInUser = {};
+        this.$router.push('/login');
+    },
+    adminCheck() {
+      const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+      if (!loggedInUser || !loggedInUser.admin) {
+        alert('You are not authorized to view this page');
+        this.$router.push({ name: 'Login' });
+      }
     },
   },
+  created() {
+    this.adminCheck();
+  }
 };
 </script>
   

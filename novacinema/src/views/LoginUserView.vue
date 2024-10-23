@@ -39,7 +39,7 @@ export default {
           localStorage.setItem('loggedInUser', JSON.stringify(user));
           console.log(localStorage.getItem('loggedInUser'))
           if (user.admin) {
-              this.$router.push('/admin');
+              this.$router.push('/admin-dashboard');
           } else {
               this.$router.push('/myaccount');
           }
