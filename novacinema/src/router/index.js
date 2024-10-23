@@ -12,7 +12,6 @@ import MovieReviews from '@/views/MovieReviews.vue'
 import AdminDashboard from '@/views/AdminDashboardView.vue' 
 import ManageUsers from '@/views/ManageUserView.vue' 
 import LoginUserView from '@/views/LoginUserView.vue'
-import AdminDashboardView from '@/views/AdminDashboardView.vue'
 
 
 const routes = [
@@ -81,12 +80,6 @@ const routes = [
     name: 'ManageUsers',
     component: ManageUsers
   },
-  {
-    path: '/admin',
-    name: 'admin',
-    component: AdminDashboardView,
-}
-
 ]
 
 const router = createRouter({
