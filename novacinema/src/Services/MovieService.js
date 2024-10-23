@@ -10,7 +10,7 @@ class MovieService {
 
   // Fetch a single movie by ID
   getMovieById(id) {
-    return axios.get(`${MOVIE_API_BASE_URL}/read${id}`);
+    return axios.get(`${MOVIE_API_BASE_URL}/read/${id}`);
   }
 
   // Create a new movie

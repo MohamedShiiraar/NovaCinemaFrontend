@@ -27,7 +27,6 @@
       <h2>Special Promotions</h2>
       <div class="promotions">
         <div v-for="promotion in promotions" :key="promotion.promotionID" class="promo-card">
-          <img src="https://via.placeholder.com/300x150?text=Student+Discount" alt="Student Discount Promotion">
           <div class="promo-info">
             <h2>{{ promotion.promotionName }}</h2>
             <p>{{ promotion.promotionDescription }}</p>
